@@ -1,0 +1,19 @@
+{
+  "name": "IronDB",
+  "private": false,
+  "version": "0.0.1",
+  "scripts": {
+    "build": "webpack --mode production",
+    "dev": "webpack -w --mode development"
+  },
+  "dependencies": {
+    "idb-keyval": "^3.0.5",
+    "js-cookie": "^2.2.0",
+    "lodash": "^4.17.10"
+  },
+  "devDependencies": {
+    "uglifyjs-webpack-plugin": "^1.2.7",
+    "webpack": "^4.15.1",
+    "webpack-cli": "^3.1.0"
+  }
+}

@@ -1,0 +1,47 @@
+<hmlt>
+  <head>
+    <style>
+      body {
+        margin: 40px;
+      }
+      input {
+        width: 300px;
+        margin: 6px 0px;
+      }
+      hr {
+        margin: 20px 0px;
+      }
+      span {
+        width: 120px;
+        display: inline-block;
+      }
+    </style>
+  </head>
+  <body>
+    <br/>
+    <span>Key</span><input id="key" type="text" value="keysup"><br/>
+    <hr/>
+    <span>Value</span> <input id="value" type="text">
+    <button id="set" type="submit">Set</button>
+    <button id="get" type="submit">Get</button>
+    <button id="remove" type="submit">Remove</button>
+    <hr/>
+
+    <span>Cookies</span> <input id="cookies" type="text" disabled>
+    <button id="removeCookie" type="submit">Remove</button><br/>
+
+    <span>IndexedDB</span> <input id="indexedDB" type="text" disabled>
+    <button id="removeIndexedDB" type="submit">Remove</button><br/>
+
+    <span>LocalStorage</span> <input id="localStorage" type="text" disabled>
+    <button id="removeLocalStorage" type="submit">Remove</button><br/>
+
+    <span>SessionStorage</span> <input id="sessionStorage" type="text" disabled>
+    <button id="removeSessionStorage" type="submit">Remove</button><br/>
+
+    <script src="/dist/iron-db.js"></script>
+    <script src="idb-keyval-iife.js"></script>
+    <script src="js-cookie.js"></script>
+    <script src="test.js"></script>
+  </body>
+</html>
