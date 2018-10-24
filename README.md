@@ -1,5 +1,8 @@
-<h1 align="center">
-  <img src="logo.png" width="300px" alt="IronDB"><br>
+<h1>
+  <div align="center">
+    <img src="logo.png" width="260px" height="435px" alt="IronDB">
+  </div>
+
   IronDB
 </h1>
 
