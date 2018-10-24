@@ -1,10 +1,10 @@
 <h1 align="center">
-  <img src="logo.png" width="300px" alt="IronDB">
+  <img src="logo.png" width="300px" alt="IronDB"><br>
   IronDB
 </h1>
 
 
-### IronDB is a resilient key-value store for the browser
+### IronDB is a resilient key-value store for the browser.
 
 IronDB is the best way to store persistent key-value data in the browser. Data
 saved to IronDB is redundantly saved to multiple browser stores
