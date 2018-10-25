@@ -3,6 +3,7 @@
   "private": false,
   "version": "0.1.0",
   "main": "src/index.js",
+  "types": "iron-db.d.ts",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack -w --mode development"
