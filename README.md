@@ -10,15 +10,24 @@
 ### IronDB is a resilient key-value store for the browser.
 
 IronDB is the best way to store persistent key-value data in the browser. Data
-saved to IronDB is redundantly saved to multiple browser stores
+saved to IronDB is redundantly stored in
+[Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies),
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API),
+[LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
+and
+[SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage),
+and relentlessly self heals if any data is deleted or corrupted.
 
-  * Cookies
-  * IndexedDB
-  * LocalStorage
-  * SessionStorage
+For example, clearing cookies is a common user action, even for relatively
+non-technical users. And IndexedDB, LocalStorage, and SessionStorage can be
+unceremoniously
+[purged](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria#LRU_policy),
+without warning, by browsers under storage pressure.
 
-and relentlessly self heals if any of those stores are deleted or corrupted. In
-this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie) but
+IronDB is resilient in the face of such events.
+
+In this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie)
+but
 
   1. Is actively maintained and well documented.
 
@@ -41,14 +50,14 @@ this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie) but
 
 When you store a key-value pair in IronDB, that key and value are saved
 redundantly in the browser's cookies, IndexedDB, LocalStorage, and
-SessionStorage storage engines.
+SessionStorage datastores.
 
 When a value is retrieved via its key, IronDB
 
   1. Looks up that key in every store.
   2. Counts each unique, returned value.
-  3. Determines the most commonly returned value as the 'correct' value.
-  4. Returns this most common correct value
+  3. Determines the most commonly returned unique value as the 'correct' value.
+  4. Returns this most common correct value.
 
 Then IronDB self-heals: if any store(s) returned a value different than the
 determined correct value, or no value at all, the correct value is rewritten to
@@ -117,8 +126,8 @@ Available stores are
   - LocalStorageStore -> Keys and values are stored in `window.localStorage`.
   - SessionStorageStore -> Keys and values are stored in `window.sessionStorage`.
 
-Additional storage implementations can easily be added, too; they need only
-implement the `get(key, default)`, `set(key, value)`, and `remove(key)` methods.
+New storage implementations can easily be added, too; they need only implement
+the methods `get(key, default)`, `set(key, value)`, and `remove(key)`.
 
 
 ### Installation
