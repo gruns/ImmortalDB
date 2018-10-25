@@ -40,8 +40,8 @@ this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie) but
 ### How IronDB works
 
 When you store a key-value pair in IronDB, that key and value are saved
-redundantly in the browser's cookie, IndexedDB, LocalStorage, and SessionStorage
-storage engines.
+redundantly in the browser's cookies, IndexedDB, LocalStorage, and
+SessionStorage storage engines.
 
 When a value is retrieved via its key, IronDB
 
@@ -50,7 +50,7 @@ When a value is retrieved via its key, IronDB
   3. Determines the most commonly returned value as the 'correct' value.
   4. Returns this most common correct value
 
-Then IronDB self heals: if any store(s) returned a value different than the
+Then IronDB self-heals: if any store(s) returned a value different than the
 determined correct value, or no value at all, the correct value is rewritten to
 that store. In this way, consensus, reliability, and redundancy is maintained.
 
@@ -71,7 +71,7 @@ await IronDB.set('key', 'value')
 embedded, like
 
 ```javascript
-const count = (await IronDB.set('count', countNumberOfClowns())) + 1
+const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
 ```
 
 To retrieve a value, use `get(key, default=null)`:
@@ -99,7 +99,7 @@ console.log(await IronDB.get('hi')) // Prints 'null'.
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
 The storage engines that IronDB stores data in can also be configured. For
-example, to only store data reliably in browser cookies and localStorage:
+example, to only store data reliably in cookies and LocalStorage:
 
 ```javascript
 import { IronStorage, CookieStore, LocalStorageStore } from 'iron-db'
@@ -112,13 +112,13 @@ await db.set('key', JSON.Stringify({1:1}))
 
 Available stores are
 
-  - CookieStore -> Data stored in `document.cookie`.
-  - IndexedDbStore -> Data stored in `window.indexedDB`.
-  - LocalStorageStore -> Data stored in `window.localStorage`.
-  - SessionStorageStore -> Data stored in `window.sessionStorage`.
+  - CookieStore -> Keys and values are stored in `document.cookie`.
+  - IndexedDbStore -> Keys and values are stored in `window.indexedDB`.
+  - LocalStorageStore -> Keys and values are stored in `window.localStorage`.
+  - SessionStorageStore -> Keys and values are stored in `window.sessionStorage`.
 
-Adding other additional, custom stores is easy, too: new stores need only
-implement the `get(key)`, `set(key, value)`, and `remove(key)` methods.
+Additional storage implementations can easily be added, too; they need only
+implement the `get(key, default)`, `set(key, value)`, and `remove(key)` methods.
 
 
 ### Installation
