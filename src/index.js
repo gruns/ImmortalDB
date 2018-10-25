@@ -71,16 +71,20 @@ class IronStorage {
     }
 
     async get (key, _default=null) {
-        const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
-
+        key = `${DEFAULT_KEY_PREFIX}${key}`
+        
         const values = []
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        
+        const ops = this.stores.map(async store => {
             try {
-                let value = await store.get(prefixedKey)
+                let value = await store.get(key)
                 values.push(value)
-            } catch (err) {}
-        }
+            } catch(err) {
+                cl(err)   
+            }
+        })
+        
+        await Promise.all(ops)
 
         const counted = Array.from(countUniques(values).entries())
         const sorted = sortBy(counted, i => i[1]).reverse()
@@ -106,25 +110,31 @@ class IronStorage {
     async set (key, value) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
 
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        let ops = this.stores.map(async store => {
             try {
                 await store.set(key, value)
-            } catch (err) {}
-        }
-
+            } catch(err) {
+                cl(err)   
+            }
+        })
+        
+        await Promise.all(ops)
+        
         return value
     }
 
     async remove (key) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
-
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        
+        let ops = this.stores.map(async store => {
             try {
                 await store.remove(key)
-            } catch (err) { cl(err) }
-        }
+            } catch(err) {
+                cl(err)   
+            }
+        })
+        
+        await Promise.all(ops)
     }
 }
 
