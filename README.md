@@ -16,17 +16,16 @@ saved to IronDB is redundantly stored in
 [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
 and
 [SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage),
-and relentlessly self heals if any data is deleted or corrupted.
+and relentlessly self heals if any data therein is deleted or corrupted.
 
 For example, clearing cookies is a common user action, even for relatively
-non-technical users. And IndexedDB, LocalStorage, and SessionStorage can be
-unceremoniously
-[purged](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria#LRU_policy),
-without warning, by browsers under storage pressure.
+non-technical users. And browsers will unceremoniously
+[delete](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria#LRU_policy)
+IndexedDB, LocalStorage, and/or SessionStorage without warning.
 
 IronDB is resilient in the face of such events.
 
-In this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie)
+In this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie),
 but
 
   1. Is actively maintained and well documented.
@@ -34,7 +33,7 @@ but
   2. Provides a simple, modern, Promise-based API.
 
   3. Strikes an equitable balance between reliability and respect for the
-     user. Data is stored resiliently but can also be voluntarily purged if the
+     user. Data is stored reliably but can also be voluntarily purged if the
      user designedly clears cookies and application storage.
 
   4. Doesn't use nefarious exploits nor deprecated third party plugins like
@@ -42,11 +41,11 @@ but
 
   5. Doesn't vandalize performance or the user experience. For example,
      Evercookie's CSS History Knocking can beget a deluge of background HTTP
-     requests, and loading Silverlight or Flash can thrash the user's disk or
-     raise unsought permission modals.
+     requests, and loading Silverlight or Flash can raise unsought permission
+     modals or thrash the user's disk.
 
 
-### How IronDB works
+### How IronDB works.
 
 When you store a key-value pair in IronDB, that key and value are saved
 redundantly in the browser's cookies, IndexedDB, LocalStorage, and
@@ -107,8 +106,10 @@ console.log(await IronDB.get('hi')) // Prints 'null'.
 `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
-The storage engines that IronDB stores data in can also be configured. For
-example, to only store data reliably in cookies and LocalStorage:
+#### Stores
+
+The data stores that IronDB stores data in can also be configured. For example,
+to only store data reliably in cookies and LocalStorage:
 
 ```javascript
 import { IronStorage, CookieStore, LocalStorageStore } from 'iron-db'
