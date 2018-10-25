@@ -53,17 +53,19 @@ SessionStorage datastores.
 
 When a value is retrieved via its key, IronDB
 
-  1. Looks up that key in every store.
-  2. Counts each unique, returned value.
+  1. Looks up that key in every datastore.
+  2. Counts each unique returned value.
   3. Determines the most commonly returned unique value as the 'correct' value.
-  4. Returns this most common correct value.
+  4. Returns this 'correct' value.
 
-Then IronDB self-heals: if any store(s) returned a value different than the
+Then IronDB self-heals: if any datastore(s) returned a value different than the
 determined correct value, or no value at all, the correct value is rewritten to
 that store. In this way, consensus, reliability, and redundancy is maintained.
 
 
 ### API
+
+#### Set()
 
 IronDB's API is simple. To store a value, use `set(key, value)`:
 
@@ -82,6 +84,8 @@ embedded, like
 const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
 ```
 
+#### Get()
+
 To retrieve a value, use `get(key, default=null)`:
 
 ```javascript
@@ -91,6 +95,8 @@ const value = await IronDB.get('key', default=null)
 `get()` returns the value associated with `key`, if `key` exists. If `key`
 doesn't exist, `default` is returned. `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
+
+#### Remove()
 
 Finally, to remove a key, use `remove(key)`:
 
