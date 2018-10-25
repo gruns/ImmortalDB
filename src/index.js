@@ -110,7 +110,7 @@ class IronStorage {
     async set (key, value) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
 
-        let ops = this.stores.map(async store => {
+        const ops = this.stores.map(async store => {
             try {
                 await store.set(key, value)
             } catch(err) {
@@ -126,7 +126,7 @@ class IronStorage {
     async remove (key) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
         
-        let ops = this.stores.map(async store => {
+        const ops = this.stores.map(async store => {
             try {
                 await store.remove(key)
             } catch(err) {
