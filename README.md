@@ -90,7 +90,7 @@ Finally, to remove a key, use `remove(key)`:
 IronDB.set('hi', 'bonjour')
 console.log(await IronDB.get('hi'))  // Prints 'bonjour'.
 
-await IronDB.remove('key')
+await IronDB.remove('hi')
 
 console.log(await IronDB.get('hi')) // Prints 'null'.
 ```
