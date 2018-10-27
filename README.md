@@ -144,3 +144,21 @@ Installing IronDB with npm is easy.
 ```
 $ npm install iron-db
 ```
+
+Or include `dist/iron-db[.min].js` and use `window.IronDB` directly.
+
+```html
+<html>
+  <head>
+    <script src="iron-db.min.js"></script>
+    <script>
+      (async () => {
+          const db = IronDB.IronDB;
+          await db.set('hi', 'lolsup');
+      })();
+    </script>
+  </head>
+
+  ...
+</html>
+```

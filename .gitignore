@@ -2,7 +2,6 @@
 .#*
 \#*
 .tox
-dist/
 .eggs/
 build/
 *.pyc
