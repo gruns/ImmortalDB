@@ -73,14 +73,13 @@ class IronStorage {
     async get (key, _default=null) {
         const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
 
-        const values = []
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        const values = await Promise.all(this.stores.map(async store => {
             try {
-                let value = await store.get(prefixedKey)
-                values.push(value)
-            } catch (err) {}
-        }
+                return await store.get(prefixedKey)
+            } catch (err) {
+                cl(err)   
+            }
+        }))
 
         const counted = Array.from(countUniques(values).entries())
         const sorted = sortBy(counted, i => i[1]).reverse()
@@ -106,12 +105,13 @@ class IronStorage {
     async set (key, value) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
 
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        await Promise.all(this.stores.map(async store => {
             try {
                 await store.set(key, value)
-            } catch (err) {}
-        }
+            } catch (err) {
+                cl(err)
+            }
+        }))
 
         return value
     }
@@ -119,12 +119,13 @@ class IronStorage {
     async remove (key) {
         key = `${DEFAULT_KEY_PREFIX}${key}`
 
-        for (const store of this.stores) {
-            // TODO(grun): Run in parallel.
+        await Promise.all(this.stores.map(async store => {
             try {
                 await store.remove(key)
-            } catch (err) { cl(err) }
-        }
+            } catch (err) {
+                cl(err)
+            }
+        }))
     }
 }
 
