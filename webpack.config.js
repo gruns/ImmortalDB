@@ -27,10 +27,11 @@ function abspath (p) {
     return path.resolve(__dirname, p)
 }
 
-module.exports = {
+module.exports = (env, argv) => ({
     entry: {
         'iron-db': abspath('src/index.js'),
-        'iron-db.min': abspath('src/index.js'),
+        ...(argv.mode === 'production' &&
+            {'iron-db.min': abspath('src/index.js')}),
     },
     output: {
         library: 'IronDB',
@@ -44,4 +45,4 @@ module.exports = {
             }),
         ]
     }
-}
+})
