@@ -134,4 +134,6 @@ const IronDB = new IronStorage()
 
 
 export {
-    IronDB, IronStorage, CookieStore, DEFAULT_STORES, DEFAULT_KEY_PREFIX }
+    IronDB, IronStorage,
+    CookieStore, IndexedDbStore, LocalStorageStore, SessionStorageStore,
+    DEFAULT_STORES, DEFAULT_KEY_PREFIX }
