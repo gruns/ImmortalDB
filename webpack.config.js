@@ -9,15 +9,14 @@
 //
 
 //
-// Run this script with
+// Build production bundles with
 //
 //   npm run build
 //
-// for production, or
+// Run webpack in development mode with
 //
 //   npm run dev
 //
-// for development.
 
 const path = require('path')
 const webpack = require('webpack')
