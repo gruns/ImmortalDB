@@ -29,8 +29,8 @@ class StorageApiWrapper implements Store {
     set(key: string, value: string): Promise<void>;
     remove(key: string): Promise<void>;
 }
-export class LocalStorageStore implements StorageApiWrapper {}
-export class SessionStorageStore implements StorageApiWrapper {}
+export class LocalStorageStore extends StorageApiWrapper {}
+export class SessionStorageStore extends StorageApiWrapper {}
 
 export class IronStorage {
     constructor(stores?: Store[]);
