@@ -9,8 +9,9 @@
 //
 
 import Cookies from 'js-cookie'
-import { get, last, sortBy } from 'lodash'
-
+import get from 'lodash.get'
+import last from 'lodash.last'
+import sortBy from 'lodash.sortby'
 import { CookieStore } from './cookie-store'
 import { IndexedDbStore } from './indexed-db'
 import { LocalStorageStore, SessionStorageStore } from './web-storage'

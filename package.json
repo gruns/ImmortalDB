@@ -6,16 +6,20 @@
   "types": "iron-db.d.ts",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack -w --mode development"
+    "dev": "webpack -w --mode development",
+    "serve": "NODE_ENV=development webpack-dev-server --open"
   },
   "dependencies": {
     "idb-keyval": "^3.0.5",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10"
+    "lodash.get": "^4.4.2",
+    "lodash.last": "^3.0.0",
+    "lodash.sortby": "^4.7.0"
   },
   "devDependencies": {
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.15.1",
-    "webpack-cli": "^3.1.0"
+    "webpack-cli": "^3.1.0",
+    "webpack-dev-server": "^3.1.10"
   }
 }
