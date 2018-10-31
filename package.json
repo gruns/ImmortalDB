@@ -11,7 +11,7 @@
   "dependencies": {
     "idb-keyval": "^3.0.5",
     "js-cookie": "^2.2.0",
-    "lodash": "^4.17.10"
+    "lodash-es": "^4.17.11"
   },
   "devDependencies": {
     "uglifyjs-webpack-plugin": "^1.2.7",
