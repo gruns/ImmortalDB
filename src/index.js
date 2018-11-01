@@ -9,7 +9,7 @@
 //
 
 import Cookies from 'js-cookie'
-import { get, last, sortBy } from 'lodash'
+import { get, last, sortBy } from 'lodash-es'
 
 import { CookieStore } from './cookie-store'
 import { IndexedDbStore } from './indexed-db'
