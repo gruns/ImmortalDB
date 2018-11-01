@@ -3,12 +3,10 @@
       "ecmaVersion": "2018",
       "sourceType": "module"
     },
+    "plugins":["prettier"],
     "extends": [
-      "eslint:recommended"
+      "standard", "eslint-config-prettier"
     ],
-    "rules": {
-      "no-console": "off"
-    },
     "env": {
         "browser": true,
         "es6": true
