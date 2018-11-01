@@ -6,7 +6,8 @@
   "types": "iron-db.d.ts",
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack -w --mode development"
+    "dev": "webpack -w --mode development",
+    "lint": "eslint src"
   },
   "dependencies": {
     "idb-keyval": "^3.0.5",
@@ -14,6 +15,7 @@
     "lodash-es": "^4.17.11"
   },
   "devDependencies": {
+    "eslint": "^5.8.0",
     "uglifyjs-webpack-plugin": "^1.2.7",
     "webpack": "^4.15.1",
     "webpack-cli": "^3.1.0"

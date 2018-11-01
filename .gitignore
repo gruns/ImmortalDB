@@ -9,3 +9,4 @@ build/
 *.egg
 *.egg-info
 node_modules/
+.vscode
