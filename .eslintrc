@@ -7,8 +7,11 @@
     "extends": [
       "standard", "eslint-config-prettier"
     ],
+    "rules": {
+        "space-before-function-paren": [2, "always"]
+    },
     "env": {
         "browser": true,
         "es6": true
     }
-  }
+}
