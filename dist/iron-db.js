@@ -90,7 +90,7 @@ var IronDB =
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 
 
 /** Detect free variable `self`. */
@@ -152,6 +152,18 @@ var isBuffer = nativeIsBuffer || _stubFalse_js__WEBPACK_IMPORTED_MODULE_1__[/* d
 
 /***/ }),
 /* 2 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
+var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
+
+/* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
+
+/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)))
+
+/***/ }),
+/* 3 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
@@ -326,23 +338,11 @@ var __WEBPACK_AMD_DEFINE_FACTORY__, __WEBPACK_AMD_DEFINE_RESULT__;/*!
 
 
 /***/ }),
-/* 3 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(global) {/** Detect free variable `global` from Node.js. */
-var freeGlobal = typeof global == 'object' && global && global.Object === Object && global;
-
-/* harmony default export */ __webpack_exports__["a"] = (freeGlobal);
-
-/* WEBPACK VAR INJECTION */}.call(this, __webpack_require__(8)))
-
-/***/ }),
 /* 4 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(3);
+/* WEBPACK VAR INJECTION */(function(module) {/* harmony import */ var _freeGlobal_js__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(2);
 
 
 /** Detect free variable `exports`. */
@@ -437,10 +437,6 @@ function stubFalse() {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-
-// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
-var js_cookie = __webpack_require__(2);
-var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
 
 // CONCATENATED MODULE: ./node_modules/lodash-es/_arrayPush.js
 /**
@@ -4205,6 +4201,10 @@ var sortBy = _baseRest(function(collection, iteratees) {
 
 /* harmony default export */ var lodash_es_sortBy = (sortBy);
 
+// EXTERNAL MODULE: ./node_modules/js-cookie/src/js.cookie.js
+var js_cookie = __webpack_require__(3);
+var js_cookie_default = /*#__PURE__*/__webpack_require__.n(js_cookie);
+
 // CONCATENATED MODULE: ./src/cookie-store.js
 //
 // IronDB - A resilient key-value store for browsers.
@@ -4218,29 +4218,26 @@ var sortBy = _baseRest(function(collection, iteratees) {
 
 
 
-
-const DEFAULT_COOKIE_TTL = 365  // Days.
-
+const DEFAULT_COOKIE_TTL = 365 // Days.
 
 class cookie_store_CookieStore {
-    constructor (ttl=DEFAULT_COOKIE_TTL) {
-        this.ttl = ttl
-    }
+  constructor (ttl = DEFAULT_COOKIE_TTL) {
+    this.ttl = ttl
+  }
 
-    async get (key) {
-        const value = js_cookie_default.a.get(key)
-        return typeof value === 'string' ? value : undefined
-    }
+  async get (key) {
+    const value = js_cookie_default.a.get(key)
+    return typeof value === 'string' ? value : undefined
+  }
 
-    async set (key, value) {
-        js_cookie_default.a.set(key, value, {expires: this.ttl})
-    }
+  async set (key, value) {
+    js_cookie_default.a.set(key, value, { expires: this.ttl })
+  }
 
-    async remove (key) {
-        js_cookie_default.a.remove(key, {expires: this.ttl})
-    }
+  async remove (key) {
+    js_cookie_default.a.remove(key, { expires: this.ttl })
+  }
 }
-
 
 
 
@@ -4323,30 +4320,27 @@ function idb_keyval_keys(store = getDefaultStore()) {
 
 
 
-
 const DEFAULT_DATABASE_NAME = 'IronDB'
 const DEFAULT_STORE_NAME = 'key-value-pairs'
 
-
 class indexed_db_IndexedDbStore {
-    constructor (dbName=DEFAULT_DATABASE_NAME, storeName=DEFAULT_STORE_NAME) {
-        this.store = new Store(dbName, storeName)
-    }
+  constructor (dbName = DEFAULT_DATABASE_NAME, storeName = DEFAULT_STORE_NAME) {
+    this.store = new Store(dbName, storeName)
+  }
 
-    async get (key) {
-        const value = await idb_keyval_get(key, this.store)
-        return typeof value === 'string' ? value : undefined
-    }
+  async get (key) {
+    const value = await idb_keyval_get(key, this.store)
+    return typeof value === 'string' ? value : undefined
+  }
 
-    async set (key, value) {
-        await set(key, value, this.store)
-    }
+  async set (key, value) {
+    await set(key, value, this.store)
+  }
 
-    async remove (key) {
-        await del(key, this.store)
-    }
+  async remove (key) {
+    await del(key, this.store)
+  }
 }
-
 
 
 
@@ -4362,36 +4356,35 @@ class indexed_db_IndexedDbStore {
 //
 
 class StorageApiWrapper {
-    constructor (store) {
-        this.store = store
-    }
+  constructor (store) {
+    this.store = store
+  }
 
-    async get (key) {
-        const value = this.store.getItem(key)
-        return typeof value === 'string' ? value : undefined
-    }
+  async get (key) {
+    const value = this.store.getItem(key)
+    return typeof value === 'string' ? value : undefined
+  }
 
-    async set (key, value) {
-        this.store.setItem(key, value)
-    }
+  async set (key, value) {
+    this.store.setItem(key, value)
+  }
 
-    async remove (key) {
-        this.store.removeItem(key)
-    }
+  async remove (key) {
+    this.store.removeItem(key)
+  }
 }
 
 class LocalStorageStore extends StorageApiWrapper {
-    constructor () {
-        super(window.localStorage)
-    }
+  constructor () {
+    super(window.localStorage)
+  }
 }
 
 class SessionStorageStore extends StorageApiWrapper {
-    constructor () {
-        super(window.sessionStorage)
-    }
+  constructor () {
+    super(window.sessionStorage)
+  }
 }
-
 
 
 
@@ -4420,124 +4413,123 @@ class SessionStorageStore extends StorageApiWrapper {
 
 
 
-
-
 // Stores must implement asynchronous get(), set(), and remove() methods.
 const STORE_CLASSES = [cookie_store_CookieStore]
 if (window.indexedDB) {
-    STORE_CLASSES.push(indexed_db_IndexedDbStore)
+  STORE_CLASSES.push(indexed_db_IndexedDbStore)
 }
 if (window.localStorage) {
-    STORE_CLASSES.push(LocalStorageStore)
+  STORE_CLASSES.push(LocalStorageStore)
 }
 if (window.sessionStorage) {
-    STORE_CLASSES.push(SessionStorageStore)
+  STORE_CLASSES.push(SessionStorageStore)
 }
-
 
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_iron|'
-const DEFAULT_STORES = STORE_CLASSES.map(klass => new klass())
-
+const DEFAULT_STORES = STORE_CLASSES.map(Klass => new Klass())
 
 function countUniques (iterable) {
-    // A Map must be used instead of an Object because JavaScript is a buttshit
-    // language and all Object keys are serialized to strings. Thus undefined
-    // becomes 'undefined', null becomes 'null', etc and in turn null can't be
-    // differentiated from 'null', 'undefined' from undefined, etc. E.g.
-    // countUniques([null, 'null']) would incorrectly return {'null': 2} instead
-    // of the correct {null: 1, 'null': 1}.
-    //
-    // Unfortunately this Object behavior precludes the use of lodash.countBy()
-    // and similar methods which count with Objects instead of Maps.
-    const m = new Map()
-    let eles = iterable.slice()
+  // A Map must be used instead of an Object because JavaScript is a buttshit
+  // language and all Object keys are serialized to strings. Thus undefined
+  // becomes 'undefined', null becomes 'null', etc and in turn null can't be
+  // differentiated from 'null', 'undefined' from undefined, etc. E.g.
+  // countUniques([null, 'null']) would incorrectly return {'null': 2} instead
+  // of the correct {null: 1, 'null': 1}.
+  //
+  // Unfortunately this Object behavior precludes the use of lodash.countBy()
+  // and similar methods which count with Objects instead of Maps.
+  const m = new Map()
+  let eles = iterable.slice()
 
-    for (const ele of eles) {
-        let count = 0
-        for (const obj of eles) {
-            if (ele === obj) {
-                count += 1
-            }
-        }
-
-        if (count > 0) {
-            m.set(ele, count)
-            eles = eles.filter(obj => obj !== ele)
-        }
+  for (const ele of eles) {
+    let count = 0
+    for (const obj of eles) {
+      if (ele === obj) {
+        count += 1
+      }
     }
 
-    return m
-}
+    if (count > 0) {
+      m.set(ele, count)
+      eles = eles.filter(obj => obj !== ele)
+    }
+  }
 
+  return m
+}
 
 class src_IronStorage {
-    constructor (stores=DEFAULT_STORES) {
-        this.stores = stores.filter(Boolean)
-    }
+  constructor (stores = DEFAULT_STORES) {
+    this.stores = stores.filter(Boolean)
+  }
 
-    async get (key, _default=null) {
-        const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
+  async get (key, _default = null) {
+    const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
 
-        const values = await Promise.all(this.stores.map(async store => {
-            try {
-                return await store.get(prefixedKey)
-            } catch (err) {
-                cl(err)   
-            }
-        }))
-
-        const counted = Array.from(countUniques(values).entries())
-        const sorted = lodash_es_sortBy(counted, i => i[1]).reverse()
-
-        let value = undefined
-        const [firstValue, firstCount] = lodash_es_get(sorted, '[0]', [undefined, 0])
-        const [secondValue, secondCount] = lodash_es_get(sorted, '[1]', [undefined, 0])
-        if (firstCount > secondCount) {
-            value = firstValue
-        } else if (firstCount == secondCount) {
-            value = (firstValue !== undefined ? firstValue : secondValue)
+    const values = await Promise.all(
+      this.stores.map(async store => {
+        try {
+          return await store.get(prefixedKey)
+        } catch (err) {
+          cl(err)
         }
+      }),
+    )
 
-        if (value !== undefined) {
-            await this.set(key, value)
-            return value
-        } else {
-            await this.remove(key)
-            return _default
+    const counted = Array.from(countUniques(values).entries())
+    const sorted = lodash_es_sortBy(counted, i => i[1]).reverse()
+
+    let value
+    const [firstValue, firstCount] = lodash_es_get(sorted, '[0]', [undefined, 0])
+    const [secondValue, secondCount] = lodash_es_get(sorted, '[1]', [undefined, 0])
+    if (firstCount > secondCount) {
+      value = firstValue
+    } else if (firstCount === secondCount) {
+      value = firstValue !== undefined ? firstValue : secondValue
+    }
+
+    if (value !== undefined) {
+      await this.set(key, value)
+      return value
+    } else {
+      await this.remove(key)
+      return _default
+    }
+  }
+
+  async set (key, value) {
+    key = `${DEFAULT_KEY_PREFIX}${key}`
+
+    await Promise.all(
+      this.stores.map(async store => {
+        try {
+          await store.set(key, value)
+        } catch (err) {
+          cl(err)
         }
-    }
+      }),
+    )
 
-    async set (key, value) {
-        key = `${DEFAULT_KEY_PREFIX}${key}`
+    return value
+  }
 
-        await Promise.all(this.stores.map(async store => {
-            try {
-                await store.set(key, value)
-            } catch (err) {
-                cl(err)
-            }
-        }))
+  async remove (key) {
+    key = `${DEFAULT_KEY_PREFIX}${key}`
 
-        return value
-    }
-
-    async remove (key) {
-        key = `${DEFAULT_KEY_PREFIX}${key}`
-
-        await Promise.all(this.stores.map(async store => {
-            try {
-                await store.remove(key)
-            } catch (err) {
-                cl(err)
-            }
-        }))
-    }
+    await Promise.all(
+      this.stores.map(async store => {
+        try {
+          await store.remove(key)
+        } catch (err) {
+          cl(err)
+        }
+      }),
+    )
+  }
 }
 
-
 const IronDB = new src_IronStorage()
-
 
 
 

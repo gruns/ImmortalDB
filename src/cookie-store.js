@@ -10,28 +10,25 @@
 
 import Cookies from 'js-cookie'
 
-
-const DEFAULT_COOKIE_TTL = 365  // Days.
-
+const DEFAULT_COOKIE_TTL = 365 // Days.
 
 class CookieStore {
-    constructor (ttl=DEFAULT_COOKIE_TTL) {
-        this.ttl = ttl
-    }
+  constructor (ttl = DEFAULT_COOKIE_TTL) {
+    this.ttl = ttl
+  }
 
-    async get (key) {
-        const value = Cookies.get(key)
-        return typeof value === 'string' ? value : undefined
-    }
+  async get (key) {
+    const value = Cookies.get(key)
+    return typeof value === 'string' ? value : undefined
+  }
 
-    async set (key, value) {
-        Cookies.set(key, value, {expires: this.ttl})
-    }
+  async set (key, value) {
+    Cookies.set(key, value, { expires: this.ttl })
+  }
 
-    async remove (key) {
-        Cookies.remove(key, {expires: this.ttl})
-    }
+  async remove (key) {
+    Cookies.remove(key, { expires: this.ttl })
+  }
 }
-
 
 export { CookieStore }

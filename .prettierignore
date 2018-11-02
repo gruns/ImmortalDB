@@ -1,5 +1,5 @@
-node_modules
-coverage
-dist
-build
-.build
+dist/
+build/
+.build/
+coverage/
+node_modules/
