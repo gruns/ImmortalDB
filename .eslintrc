@@ -1,0 +1,14 @@
+{
+    "parserOptions": {
+      "ecmaVersion": "2018",
+      "sourceType": "module"
+    },
+    "plugins":["prettier"],
+    "extends": [
+      "standard", "eslint-config-prettier"
+    ],
+    "env": {
+        "browser": true,
+        "es6": true
+    }
+  }
