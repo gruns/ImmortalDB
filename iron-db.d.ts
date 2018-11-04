@@ -1,4 +1,14 @@
-//type definitions for iron-db
+//
+// IronDB - A resilient key-value store for browsers.
+//
+// Ansgar Grunseid
+// grunseid.com
+// grunseid@gmail.com
+//
+// License: MIT
+//
+
+// TypeScript type definitions for iron-db.
 
 export const DEFAULT_STORES: CookieStore[];
 export const DEFAULT_KEY_PREFIX: string;
