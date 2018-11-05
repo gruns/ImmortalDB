@@ -50,16 +50,16 @@ but
 
 When you store a key-value pair in IronDB, that key and value are saved
 redundantly in the browser's cookies, IndexedDB, LocalStorage, and
-SessionStorage datastores.
+SessionStorage data stores.
 
 When a value is retrieved via its key, IronDB
 
-  1. Looks up that key in every datastore.
+  1. Looks up that key in every data store.
   2. Counts each unique returned value.
   3. Determines the most commonly returned unique value as the 'correct' value.
-  4. Returns this 'correct' value.
+  4. Returns this correct value.
 
-Then IronDB self-heals: if any datastore(s) returned a value different than the
+Then IronDB self-heals: if any data store(s) returned a value different than the
 determined correct value, or no value at all, the correct value is rewritten to
 that store. In this way, consensus, reliability, and redundancy is maintained.
 
@@ -113,7 +113,7 @@ console.log(await IronDB.get('hi')) // Prints 'null'.
 `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
-#### Stores
+#### Data Stores
 
 The data stores that IronDB stores data in can also be configured. For example,
 to only store data reliably in cookies and LocalStorage:
