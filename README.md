@@ -66,7 +66,7 @@ that store. In this way, consensus, reliability, and redundancy is maintained.
 
 ### API
 
-#### Set()
+#### Set
 
 IronDB's API is simple. To store a value, use `set(key, value)`:
 
@@ -85,7 +85,7 @@ embedded, like
 const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
 ```
 
-#### Get()
+#### Get
 
 To retrieve a value, use `get(key, default=null)`:
 
@@ -97,7 +97,7 @@ const value = await IronDB.get('key', default=null)
 doesn't exist, `default` is returned. `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
-#### Remove()
+#### Remove
 
 Finally, to remove a key, use `remove(key)`:
 
