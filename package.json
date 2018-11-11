@@ -13,8 +13,7 @@
   },
   "dependencies": {
     "idb-keyval": "^3.0.5",
-    "js-cookie": "^2.2.0",
-    "lodash-es": "^4.17.11"
+    "js-cookie": "^2.2.0"
   },
   "devDependencies": {
     "eslint": "^5.8.0",

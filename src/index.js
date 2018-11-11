@@ -8,8 +8,6 @@
 // License: MIT
 //
 
-import { get, sortBy } from 'lodash-es'
-
 import { CookieStore } from './cookie-store'
 import { IndexedDbStore } from './indexed-db'
 import { LocalStorageStore, SessionStorageStore } from './web-storage'
@@ -29,6 +27,13 @@ if (window.sessionStorage) {
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_iron|'
 const DEFAULT_STORES = STORE_CLASSES.map(Klass => new Klass())
+
+function arrget (arr, index, _default = null) {
+    if (index in arr) {
+        return arr[index]
+    }
+    return _default
+}
 
 function countUniques (iterable) {
   // A Map must be used instead of an Object because JavaScript is a buttshit
@@ -79,15 +84,16 @@ class IronStorage {
     )
 
     const counted = Array.from(countUniques(values).entries())
-    const sorted = sortBy(counted, i => i[1]).reverse()
+    counted.sort((a, b) => a[1] <= b[1])
 
     let value
-    const [firstValue, firstCount] = get(sorted, '[0]', [undefined, 0])
-    const [secondValue, secondCount] = get(sorted, '[1]', [undefined, 0])
-    if (firstCount > secondCount) {
+    const [firstValue, firstCount] = arrget(counted, 0, [undefined, 0])
+    const [secondValue, secondCount] = arrget(counted, 1, [undefined, 0])
+    if (firstCount > secondCount ||
+        (firstCount == secondCount && firstValue !== undefined)) {
       value = firstValue
-    } else if (firstCount === secondCount) {
-      value = firstValue !== undefined ? firstValue : secondValue
+    } else {
+      value = secondValue
     }
 
     if (value !== undefined) {
