@@ -50,23 +50,23 @@ but
 
 When you store a key-value pair in IronDB, that key and value are saved
 redundantly in the browser's cookies, IndexedDB, LocalStorage, and
-SessionStorage datastores.
+SessionStorage data stores.
 
 When a value is retrieved via its key, IronDB
 
-  1. Looks up that key in every datastore.
+  1. Looks up that key in every data store.
   2. Counts each unique returned value.
   3. Determines the most commonly returned unique value as the 'correct' value.
-  4. Returns this 'correct' value.
+  4. Returns this correct value.
 
-Then IronDB self-heals: if any datastore(s) returned a value different than the
+Then IronDB self-heals: if any data store(s) returned a value different than the
 determined correct value, or no value at all, the correct value is rewritten to
 that store. In this way, consensus, reliability, and redundancy is maintained.
 
 
 ### API
 
-#### Set()
+#### Set
 
 IronDB's API is simple. To store a value, use `set(key, value)`:
 
@@ -85,7 +85,7 @@ embedded, like
 const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
 ```
 
-#### Get()
+#### Get
 
 To retrieve a value, use `get(key, default=null)`:
 
@@ -97,7 +97,7 @@ const value = await IronDB.get('key', default=null)
 doesn't exist, `default` is returned. `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
-#### Remove()
+#### Remove
 
 Finally, to remove a key, use `remove(key)`:
 
@@ -113,7 +113,7 @@ console.log(await IronDB.get('hi')) // Prints 'null'.
 `key` must be a
 [DOMString](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
 
-#### Stores
+#### Data Stores
 
 The data stores that IronDB stores data in can also be configured. For example,
 to only store data reliably in cookies and LocalStorage:
@@ -129,10 +129,10 @@ await db.set('key', JSON.Stringify({1:1}))
 
 Available stores are
 
-  - CookieStore -> Keys and values are stored in `document.cookie`.
-  - IndexedDbStore -> Keys and values are stored in `window.indexedDB`.
-  - LocalStorageStore -> Keys and values are stored in `window.localStorage`.
-  - SessionStorageStore -> Keys and values are stored in `window.sessionStorage`.
+  - `CookieStore` -> Keys and values are stored in `document.cookie`.
+  - `IndexedDbStore` -> Keys and values are stored in `window.indexedDB`.
+  - `LocalStorageStore` -> Keys and values are stored in `window.localStorage`.
+  - `SessionStorageStore` -> Keys and values are stored in `window.sessionStorage`.
 
 New storage implementations can easily be added, too; they need only implement
 the methods `get(key, default)`, `set(key, value)`, and `remove(key)`.
