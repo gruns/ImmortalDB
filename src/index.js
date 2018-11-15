@@ -90,7 +90,7 @@ class IronStorage {
     const [firstValue, firstCount] = arrget(counted, 0, [undefined, 0])
     const [secondValue, secondCount] = arrget(counted, 1, [undefined, 0])
     if (firstCount > secondCount ||
-        (firstCount == secondCount && firstValue !== undefined)) {
+        (firstCount === secondCount && firstValue !== undefined)) {
       value = firstValue
     } else {
       value = secondValue
