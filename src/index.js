@@ -12,21 +12,21 @@ import { CookieStore } from './cookie-store'
 import { IndexedDbStore } from './indexed-db'
 import { LocalStorageStore, SessionStorageStore } from './web-storage'
 
-// Stores must implement asynchronous get(), set(), and remove() methods.
-const STORE_CLASSES = [CookieStore]
+// Stores must implement asynchronous constructor, get(), set(), and remove()
+// methods.
+const DEFAULT_STORES = [CookieStore]
 if (window.indexedDB) {
-  STORE_CLASSES.push(IndexedDbStore)
+  DEFAULT_STORES.push(IndexedDbStore)
 }
 if (window.localStorage) {
-  STORE_CLASSES.push(LocalStorageStore)
+  DEFAULT_STORES.push(LocalStorageStore)
 }
 if (window.sessionStorage) {
-  STORE_CLASSES.push(SessionStorageStore)
+  DEFAULT_STORES.push(SessionStorageStore)
 }
 
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_iron|'
-const DEFAULT_STORES = STORE_CLASSES.map(Klass => new Klass())
 
 function arrget (arr, index, _default = null) {
     if (index in arr) {
@@ -67,10 +67,24 @@ function countUniques (iterable) {
 
 class IronStorage {
   constructor (stores = DEFAULT_STORES) {
-    this.stores = stores.filter(Boolean)
+    this.stores = []
+
+    // Initialize stores asynchronously.
+    this.onReady = (async () => {
+      this.stores = (await Promise.all(stores.map(async Store => {
+        try {
+          return await new Store()
+        } catch (err) {
+          // TODO(grun): Log (where?) that the <Store> constructor failed.
+          return null
+        }
+      }))).filter(Boolean)
+    })()
   }
 
   async get (key, _default = null) {
+    await this.onReady
+
     const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
 
     const values = await Promise.all(
@@ -106,6 +120,8 @@ class IronStorage {
   }
 
   async set (key, value) {
+    await this.onReady
+
     key = `${DEFAULT_KEY_PREFIX}${key}`
 
     await Promise.all(
@@ -122,6 +138,8 @@ class IronStorage {
   }
 
   async remove (key) {
+    await this.onReady
+
     key = `${DEFAULT_KEY_PREFIX}${key}`
 
     await Promise.all(

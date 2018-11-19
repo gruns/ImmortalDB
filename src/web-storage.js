@@ -11,6 +11,8 @@
 class StorageApiWrapper {
   constructor (store) {
     this.store = store
+
+    return (async () => this)()
   }
 
   async get (key) {

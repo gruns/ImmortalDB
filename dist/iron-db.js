@@ -289,6 +289,8 @@ const DEFAULT_COOKIE_TTL = 365 // Days.
 class cookie_store_CookieStore {
   constructor (ttl = DEFAULT_COOKIE_TTL) {
     this.ttl = ttl
+
+    return (async () => this)()
   }
 
   async get (key) {
@@ -392,6 +394,29 @@ const DEFAULT_STORE_NAME = 'key-value-pairs'
 class indexed_db_IndexedDbStore {
   constructor (dbName = DEFAULT_DATABASE_NAME, storeName = DEFAULT_STORE_NAME) {
     this.store = new Store(dbName, storeName)
+
+    return (async () => {
+      // Safari throws a SecurityError if IndexedDB.open() is called in a
+      // cross-origin iframe.
+      //
+      //   SecurityError: IDBFactory.open() called in an invalid security context
+      //
+      // Catch such and fail gracefully.
+      //
+      // TODO(grun): Update idb-keyval's Store class to fail gracefully in
+      // Safari. Push the fix(es) upstream.
+      try {
+        await this.store._dbp
+      } catch (err) {
+        if (err.name === 'SecurityError') {
+          return null // Failed to open an IndexedDB database.
+        } else {
+          throw err
+        }
+      }
+
+      return this
+    })()
   }
 
   async get (key) {
@@ -424,6 +449,8 @@ class indexed_db_IndexedDbStore {
 class StorageApiWrapper {
   constructor (store) {
     this.store = store
+
+    return (async () => this)()
   }
 
   async get (key) {
@@ -477,21 +504,21 @@ class SessionStorageStore extends StorageApiWrapper {
 
 
 
-// Stores must implement asynchronous get(), set(), and remove() methods.
-const STORE_CLASSES = [cookie_store_CookieStore]
+// Stores must implement asynchronous constructor, get(), set(), and remove()
+// methods.
+const DEFAULT_STORES = [cookie_store_CookieStore]
 if (window.indexedDB) {
-  STORE_CLASSES.push(indexed_db_IndexedDbStore)
+  DEFAULT_STORES.push(indexed_db_IndexedDbStore)
 }
 if (window.localStorage) {
-  STORE_CLASSES.push(LocalStorageStore)
+  DEFAULT_STORES.push(LocalStorageStore)
 }
 if (window.sessionStorage) {
-  STORE_CLASSES.push(SessionStorageStore)
+  DEFAULT_STORES.push(SessionStorageStore)
 }
 
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_iron|'
-const DEFAULT_STORES = STORE_CLASSES.map(Klass => new Klass())
 
 function arrget (arr, index, _default = null) {
     if (index in arr) {
@@ -532,10 +559,24 @@ function countUniques (iterable) {
 
 class IronStorage {
   constructor (stores = DEFAULT_STORES) {
-    this.stores = stores.filter(Boolean)
+    this.stores = []
+
+    // Initialize stores asynchronously.
+    this.onReady = (async () => {
+      this.stores = (await Promise.all(stores.map(async Store => {
+        try {
+          return await new Store()
+        } catch (err) {
+          // TODO(grun): Log (where?) that the <Store> constructor failed.
+          return null
+        }
+      }))).filter(Boolean)
+    })()
   }
 
   async get (key, _default = null) {
+    await this.onReady
+
     const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`
 
     const values = await Promise.all(
@@ -571,6 +612,8 @@ class IronStorage {
   }
 
   async set (key, value) {
+    await this.onReady
+
     key = `${DEFAULT_KEY_PREFIX}${key}`
 
     await Promise.all(
@@ -587,6 +630,8 @@ class IronStorage {
   }
 
   async remove (key) {
+    await this.onReady
+
     key = `${DEFAULT_KEY_PREFIX}${key}`
 
     await Promise.all(

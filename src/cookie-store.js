@@ -15,6 +15,8 @@ const DEFAULT_COOKIE_TTL = 365 // Days.
 class CookieStore {
   constructor (ttl = DEFAULT_COOKIE_TTL) {
     this.ttl = ttl
+
+    return (async () => this)()
   }
 
   async get (key) {
