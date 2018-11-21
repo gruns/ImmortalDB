@@ -1,16 +1,16 @@
 <h1>
   <div align="center">
-    <img src="logo.png" width="260px" height="435px" alt="IronDB">
+    <img src="logo.png" width="260px" height="435px" alt="ImmortalDB">
   </div>
 
-  IronDB
+  ImmortalDB
 </h1>
 
 
-### IronDB is a resilient key-value store for the browser.
+### ImmortalDB is a resilient key-value store for the browser.
 
-IronDB is the best way to store persistent key-value data in the browser. Data
-saved to IronDB is redundantly stored in
+ImmortalDB is the best way to store persistent key-value data in the
+browser. Data saved to ImmortalDB is redundantly stored in
 [Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies),
 [IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API),
 [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
@@ -24,10 +24,10 @@ non-technical users. And browsers will unceremoniously
 IndexedDB, LocalStorage, and/or SessionStorage without warning under storage
 pressure.
 
-IronDB is resilient in the face of such events.
+ImmortalDB is resilient in the face of such events.
 
-In this way, IronDB is like [Evercookie](https://github.com/samyk/evercookie),
-but
+In this way, ImmortalDB is like
+[Evercookie](https://github.com/samyk/evercookie), but
 
   1. Is actively maintained and well documented.
 
@@ -46,43 +46,44 @@ but
      modals or thrash the user's disk.
 
 
-### How IronDB works.
+### How ImmortalDB works.
 
-When you store a key-value pair in IronDB, that key and value are saved
+When you store a key-value pair in ImmortalDB, that key and value are saved
 redundantly in the browser's cookies, IndexedDB, LocalStorage, and
 SessionStorage data stores.
 
-When a value is retrieved via its key, IronDB
+When a value is retrieved via its key, ImmortalDB
 
   1. Looks up that key in every data store.
   2. Counts each unique returned value.
   3. Determines the most commonly returned unique value as the 'correct' value.
   4. Returns this correct value.
 
-Then IronDB self-heals: if any data store(s) returned a value different than the
-determined correct value, or no value at all, the correct value is rewritten to
-that store. In this way, consensus, reliability, and redundancy is maintained.
+Then ImmortalDB self-heals: if any data store(s) returned a value different than
+the determined correct value, or no value at all, the correct value is rewritten
+to that store. In this way, consensus, reliability, and redundancy is
+maintained.
 
 
 ### API
 
 #### Set
 
-IronDB's API is simple. To store a value, use `set(key, value)`:
+ImmortalDB's API is simple. To store a value, use `set(key, value)`:
 
 ```javascript
-import { IronDB } from 'iron-db'
+import { ImmortalDB } from 'ImmortalDB'
 
-await IronDB.set('key', 'value')
+await ImmortalDB.set('key', 'value')
 ```
 
 `key` and `value` must be
 [DOMStrings](https://developer.mozilla.org/en-US/docs/Web/API/DOMString).
-`IronDB.set(key, value)` also always returns `value`, so it can be chained or
+`ImmortalDB.set(key, value)` also always returns `value`, so it can be chained or
 embedded, like
 
 ```javascript
-const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
+const countPlusOne = (await ImmortalDB.set('count', countNumberOfClowns())) + 1
 ```
 
 #### Get
@@ -90,7 +91,7 @@ const countPlusOne = (await IronDB.set('count', countNumberOfClowns())) + 1
 To retrieve a value, use `get(key, default=null)`:
 
 ```javascript
-const value = await IronDB.get('key', default=null)
+const value = await ImmortalDB.get('key', default=null)
 ```
 
 `get()` returns the value associated with `key`, if `key` exists. If `key`
@@ -102,12 +103,12 @@ doesn't exist, `default` is returned. `key` must be a
 Finally, to remove a key, use `remove(key)`:
 
 ```javascript
-IronDB.set('hi', 'bonjour')
-console.log(await IronDB.get('hi'))  // Prints 'bonjour'.
+ImmortalDB.set('hi', 'bonjour')
+console.log(await ImmortalDB.get('hi'))  // Prints 'bonjour'.
 
-await IronDB.remove('hi')
+await ImmortalDB.remove('hi')
 
-console.log(await IronDB.get('hi')) // Prints 'null'.
+console.log(await ImmortalDB.get('hi')) // Prints 'null'.
 ```
 
 `key` must be a
@@ -115,14 +116,14 @@ console.log(await IronDB.get('hi')) // Prints 'null'.
 
 #### Data Stores
 
-The data stores that IronDB stores data in can also be configured. For example,
-to only store data reliably in cookies and LocalStorage:
+The data stores that ImmortalDB stores data in can also be configured. For
+example, to only store data reliably in cookies and LocalStorage:
 
 ```javascript
-import { IronStorage, CookieStore, LocalStorageStore } from 'iron-db'
+import { ImmortalStorage, CookieStore, LocalStorageStore } from 'ImmortalDB'
 
 const stores = [new CookieStore(), new LocalStorageStore()]
-const db = IronStorage(stores)
+const db = ImmortalStorage(stores)
 
 await db.set('key', JSON.Stringify({1:1}))
 ```
@@ -140,21 +141,21 @@ the methods `get(key, default)`, `set(key, value)`, and `remove(key)`.
 
 ### Installation
 
-Installing IronDB with npm is easy.
+Installing ImmortalDB with npm is easy.
 
 ```
-$ npm install iron-db
+$ npm install ImmortalDB
 ```
 
-Or include `dist/iron-db[.min].js` and use `window.IronDB` directly.
+Or include `dist/immortal-db[.min].js` and use `window.ImmortalDB` directly.
 
 ```html
 <html>
   <head>
-    <script src="iron-db.min.js"></script>
+    <script src="immortal-db.min.js"></script>
     <script>
       (async () => {
-          const db = IronDB.IronDB;
+          const db = ImmortalDB.ImmortalDB;
           await db.set('hi', 'lolsup');
       })();
     </script>

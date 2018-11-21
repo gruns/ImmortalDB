@@ -1,7 +1,7 @@
 const cl = console.log
 
 ;(async () => {
-  const db = IronDB.IronDB
+  const db = ImmortalDB.ImmortalDB
 
   await db.set('hi', 'lolsup')
 

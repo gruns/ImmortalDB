@@ -1,9 +1,9 @@
 {
-  "name": "iron-db",
+  "name": "immortal-db",
   "private": false,
   "version": "1.0.0",
   "main": "src/index.js",
-  "types": "iron-db.d.ts",
+  "types": "immortal-db.d.ts",
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack -w --mode development",

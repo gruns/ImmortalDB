@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value store for browsers.
+// ImmortalDB - A resilient key-value store for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com
@@ -8,7 +8,7 @@
 // License: MIT
 //
 
-// TypeScript type definitions for iron-db.
+// TypeScript type definitions for ImmortalDB.
 
 export const DEFAULT_STORES: CookieStore[];
 export const DEFAULT_KEY_PREFIX: string;
@@ -19,7 +19,7 @@ export class CookieStore {
     remove (key: string): Promise<void>;
 }
 
-export class IronStorage {
+export class ImmortalStorage {
     constructor (stores?:CookieStore[]);
 
     get (key: string, _default?: string | null): Promise<string>;
@@ -27,4 +27,4 @@ export class IronStorage {
     remove(key: string): Promise<void>;
 }
 
-export const IronDB: IronStorage;
+export const ImmortalDB: ImmortalStorage;

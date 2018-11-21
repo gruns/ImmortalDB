@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value storage library for browsers.
+// ImmortalDB - A resilient key-value storage library for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com
@@ -9,11 +9,11 @@
 //
 
 const cl = console.log
-const db = IronDB.IronDB
-const idb = new idbKeyval.Store('IronDB', 'key-value-pairs')
+const db = ImmortalDB.ImmortalDB
+const idb = new idbKeyval.Store('ImmortalDB', 'key-value-pairs')
 
 const POLL_TIMEOUT = 300 // Milliseconds.
-const PREFIX = IronDB.DEFAULT_KEY_PREFIX
+const PREFIX = ImmortalDB.DEFAULT_KEY_PREFIX
 
 
 function sleep (ms) {

@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value store for browsers.
+// ImmortalDB - A resilient key-value store for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com
@@ -26,7 +26,7 @@ if (window.sessionStorage) {
 }
 
 const cl = console.log
-const DEFAULT_KEY_PREFIX = '_iron|'
+const DEFAULT_KEY_PREFIX = '_immortal|'
 
 function arrget (arr, index, _default = null) {
     if (index in arr) {
@@ -65,7 +65,7 @@ function countUniques (iterable) {
   return m
 }
 
-class IronStorage {
+class ImmortalStorage {
   constructor (stores = DEFAULT_STORES) {
     this.stores = []
 
@@ -154,11 +154,11 @@ class IronStorage {
   }
 }
 
-const IronDB = new IronStorage()
+const ImmortalDB = new ImmortalStorage()
 
 export {
-  IronDB,
-  IronStorage,
+  ImmortalDB,
+  ImmortalStorage,
   CookieStore,
   IndexedDbStore,
   LocalStorageStore,

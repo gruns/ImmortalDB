@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value store for browsers.
+// ImmortalDB - A resilient key-value store for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com
@@ -15,7 +15,7 @@ import {
   del as idbRemove,
 } from 'idb-keyval'
 
-const DEFAULT_DATABASE_NAME = 'IronDB'
+const DEFAULT_DATABASE_NAME = 'ImmortalDB'
 const DEFAULT_STORE_NAME = 'key-value-pairs'
 
 class IndexedDbStore {

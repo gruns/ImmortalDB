@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value store for browsers.
+// ImmortalDB - A resilient key-value store for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com

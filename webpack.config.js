@@ -1,5 +1,5 @@
 //
-// IronDB - A resilient key-value store for browsers.
+// ImmortalDB - A resilient key-value store for browsers.
 //
 // Ansgar Grunseid
 // grunseid.com
@@ -28,12 +28,12 @@ function abspath (p) {
 
 module.exports = (env, argv) => ({
     entry: {
-        'iron-db': abspath('src/index.js'),
+        'immortal-db': abspath('src/index.js'),
         ...(argv.mode === 'production' &&
-            {'iron-db.min': abspath('src/index.js')}),
+            {'immortal-db.min': abspath('src/index.js')}),
     },
     output: {
-        library: 'IronDB',
+        library: 'ImmortalDB',
         filename: '[name].js',
         path: abspath('./dist'),
     },
