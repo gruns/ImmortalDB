@@ -154,10 +154,10 @@ Or include `dist/immortal-db[.min].js` and use `window.ImmortalDB` directly.
   <head>
     <script src="immortal-db.min.js"></script>
     <script>
-      (async () => {
-          const db = ImmortalDB.ImmortalDB;
-          await db.set('hi', 'lolsup');
-      })();
+      ;(async () => {
+        const db = ImmortalDB.ImmortalDB
+        await db.set('hi', 'lolsup')
+      })()
     </script>
   </head>
 
