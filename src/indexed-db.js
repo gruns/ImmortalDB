@@ -60,4 +60,4 @@ class IndexedDbStore {
   }
 }
 
-export { IndexedDbStore }
+export { IndexedDbStore, DEFAULT_DATABASE_NAME, DEFAULT_STORE_NAME }
