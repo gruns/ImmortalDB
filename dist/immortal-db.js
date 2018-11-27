@@ -520,7 +520,7 @@ if (window.sessionStorage) {
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_immortal|'
 
-function arrget (arr, index, _default = null) {
+function arrrayGet (arr, index, _default = null) {
     if (index in arr) {
         return arr[index]
     }
@@ -593,8 +593,8 @@ class ImmortalStorage {
     counted.sort((a, b) => a[1] <= b[1])
 
     let value
-    const [firstValue, firstCount] = arrget(counted, 0, [undefined, 0])
-    const [secondValue, secondCount] = arrget(counted, 1, [undefined, 0])
+    const [firstValue, firstCount] = arrrayGet(counted, 0, [undefined, 0])
+    const [secondValue, secondCount] = arrrayGet(counted, 1, [undefined, 0])
     if (firstCount > secondCount ||
         (firstCount === secondCount && firstValue !== undefined)) {
       value = firstValue
