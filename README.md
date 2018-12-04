@@ -72,7 +72,7 @@ maintained.
 ImmortalDB's API is simple. To store a value, use `set(key, value)`:
 
 ```javascript
-import { ImmortalDB } from 'ImmortalDB'
+import { ImmortalDB } from 'immortal-db'
 
 await ImmortalDB.set('key', 'value')
 ```
@@ -120,7 +120,7 @@ The data stores that ImmortalDB stores data in can also be configured. For
 example, to only store data reliably in cookies and LocalStorage:
 
 ```javascript
-import { ImmortalStorage, CookieStore, LocalStorageStore } from 'ImmortalDB'
+import { ImmortalStorage, CookieStore, LocalStorageStore } from 'immortal-db'
 
 const stores = [CookieStore, LocalStorageStore]
 const db = ImmortalStorage(stores)
@@ -144,7 +144,7 @@ the methods `get(key, default)`, `set(key, value)`, and `remove(key)`.
 Installing ImmortalDB with npm is easy.
 
 ```
-$ npm install ImmortalDB
+$ npm install immortal-db
 ```
 
 Or include `dist/immortal-db[.min].js` and use `window.ImmortalDB` directly.
