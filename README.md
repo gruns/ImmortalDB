@@ -122,7 +122,7 @@ example, to only store data reliably in cookies and LocalStorage:
 ```javascript
 import { ImmortalStorage, CookieStore, LocalStorageStore } from 'ImmortalDB'
 
-const stores = [new CookieStore(), new LocalStorageStore()]
+const stores = [CookieStore, LocalStorageStore]
 const db = ImmortalStorage(stores)
 
 await db.set('key', JSON.Stringify({1:1}))
