@@ -3,6 +3,7 @@
   "private": false,
   "version": "1.0.1",
   "main": "src/index.js",
+  "unpkg": "dist/immortal-db.min.js",
   "types": "immortal-db.d.ts",
   "scripts": {
     "build": "webpack --mode production",
