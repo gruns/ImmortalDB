@@ -75,7 +75,8 @@ class ImmortalStorage {
         try {
           return await new Store()
         } catch (err) {
-          // TODO(grun): Log (where?) that the <Store> constructor failed.
+          // TODO(grun): Log (where?) that the <Store> constructor Promise
+          // failed.
           return null
         }
       }))).filter(Boolean)
