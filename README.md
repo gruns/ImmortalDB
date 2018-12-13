@@ -18,8 +18,8 @@ and
 [SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage),
 and relentlessly self heals if any data therein is deleted or corrupted.
 
-For example, clearing cookies is a common user action, even for relatively
-non-technical users. And browsers will unceremoniously
+For example, clearing cookies is a common user action, even for non-technical
+users. And browsers will unceremoniously
 [delete](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria#LRU_policy)
 IndexedDB, LocalStorage, and/or SessionStorage without warning under storage
 pressure.
