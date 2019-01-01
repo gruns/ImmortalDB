@@ -31,7 +31,7 @@ In this way, ImmortalDB is like
 
   1. Is actively maintained and well documented.
 
-  2. Provides a simple, modern, Promise-based API.
+  2. Provides a simple, modern, [Promise](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise)-based API.
 
   3. Strikes an equitable balance between reliability and respect for the
      user. Data is stored reliably but can also be voluntarily purged if the
