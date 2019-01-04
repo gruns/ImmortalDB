@@ -6,6 +6,10 @@
   "types": "immortal-db.d.ts",
   "unpkg": "dist/immortal-db.min.js",
   "homepage": "https://github.com/gruns/ImmortalDB",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gruns/ImmortalDB.git"
+  },
   "scripts": {
     "build": "webpack --mode production",
     "dev": "webpack -w --mode development",
