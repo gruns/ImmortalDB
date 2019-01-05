@@ -29,10 +29,10 @@ const cl = console.log
 const DEFAULT_KEY_PREFIX = '_immortal|'
 
 function arrayGet (arr, index, _default = null) {
-    if (index in arr) {
-        return arr[index]
-    }
-    return _default
+  if (index in arr) {
+    return arr[index]
+  }
+  return _default
 }
 
 function countUniques (iterable) {
@@ -71,15 +71,17 @@ class ImmortalStorage {
 
     // Initialize stores asynchronously.
     this.onReady = (async () => {
-      this.stores = (await Promise.all(stores.map(async Store => {
-        try {
-          return await new Store()
-        } catch (err) {
-          // TODO(grun): Log (where?) that the <Store> constructor Promise
-          // failed.
-          return null
-        }
-      }))).filter(Boolean)
+      this.stores = (await Promise.all(
+        stores.map(async Store => {
+          try {
+            return await new Store()
+          } catch (err) {
+            // TODO(grun): Log (where?) that the <Store> constructor Promise
+            // failed.
+            return null
+          }
+        }),
+      )).filter(Boolean)
     })()
   }
 
@@ -104,8 +106,10 @@ class ImmortalStorage {
     let value
     const [firstValue, firstCount] = arrayGet(counted, 0, [undefined, 0])
     const [secondValue, secondCount] = arrayGet(counted, 1, [undefined, 0])
-    if (firstCount > secondCount ||
-        (firstCount === secondCount && firstValue !== undefined)) {
+    if (
+      firstCount > secondCount ||
+      (firstCount === secondCount && firstValue !== undefined)
+    ) {
       value = firstValue
     } else {
       value = secondValue
