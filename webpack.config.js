@@ -35,7 +35,7 @@ module.exports = (env, argv) => ({
     output: {
         library: 'ImmortalDB',
         filename: '[name].js',
-        path: abspath('./dist'),
+        path: abspath('./dist/'),
     },
     optimization: {
         minimizer: [
