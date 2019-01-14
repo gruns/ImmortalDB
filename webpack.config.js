@@ -20,6 +20,7 @@
 
 const path = require('path')
 const webpack = require('webpack')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
 function abspath (p) {
@@ -37,6 +38,12 @@ module.exports = (env, argv) => ({
         filename: '[name].js',
         path: abspath('./dist/'),
     },
+    plugins: [
+        new HtmlWebpackPlugin({
+            inject: 'head',
+            template: abspath('./testing/test.html'),
+        }),
+    ],
     optimization: {
         minimizer: [
             new UglifyJsPlugin({
