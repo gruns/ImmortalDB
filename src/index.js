@@ -12,21 +12,22 @@ import { CookieStore } from './cookie-store'
 import { IndexedDbStore } from './indexed-db'
 import { LocalStorageStore, SessionStorageStore } from './web-storage'
 
+const cl = console.log
+const DEFAULT_KEY_PREFIX = '_immortal|'
+const WINDOW_IS_DEFINED = typeof window !== 'undefined'
+
 // Stores must implement asynchronous constructor, get(), set(), and remove()
 // methods.
 const DEFAULT_STORES = [CookieStore]
-if (window.indexedDB) {
+if (WINDOW_IS_DEFINED && window.indexedDB) {
   DEFAULT_STORES.push(IndexedDbStore)
 }
-if (window.localStorage) {
+if (WINDOW_IS_DEFINED && window.localStorage) {
   DEFAULT_STORES.push(LocalStorageStore)
 }
-if (window.sessionStorage) {
+if (WINDOW_IS_DEFINED && window.sessionStorage) {
   DEFAULT_STORES.push(SessionStorageStore)
 }
-
-const cl = console.log
-const DEFAULT_KEY_PREFIX = '_immortal|'
 
 function arrayGet (arr, index, _default = null) {
   if (index in arr) {

@@ -3436,25 +3436,25 @@ function src_createClass(Constructor, protoProps, staticProps) { if (protoProps)
 //
 
 
- // Stores must implement asynchronous constructor, get(), set(), and remove()
+
+var cl = console.log;
+var DEFAULT_KEY_PREFIX = '_immortal|';
+var WINDOW_IS_DEFINED = typeof window !== 'undefined'; // Stores must implement asynchronous constructor, get(), set(), and remove()
 // methods.
 
 var DEFAULT_STORES = [cookie_store_CookieStore];
 
-if (window.indexedDB) {
+if (WINDOW_IS_DEFINED && window.indexedDB) {
   DEFAULT_STORES.push(indexed_db_IndexedDbStore);
 }
 
-if (window.localStorage) {
+if (WINDOW_IS_DEFINED && window.localStorage) {
   DEFAULT_STORES.push(LocalStorageStore);
 }
 
-if (window.sessionStorage) {
+if (WINDOW_IS_DEFINED && window.sessionStorage) {
   DEFAULT_STORES.push(SessionStorageStore);
 }
-
-var cl = console.log;
-var DEFAULT_KEY_PREFIX = '_immortal|';
 
 function arrayGet(arr, index) {
   var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
