@@ -13,8 +13,8 @@
   "scripts": {
     "build": "webpack --mode production",
     "lint": "eslint src/",
-    "format": "prettier --write \"src/*.+(js)\" && eslint --fix src/",
-    "start": "webpack-dev-server --watch --mode development --open"
+    "start": "webpack-dev-server --watch --mode development --open",
+    "format": "prettier --write \"src/*.+(js)\" && eslint --fix src/"
   },
   "dependencies": {
     "idb-keyval": "^3.0.5",
