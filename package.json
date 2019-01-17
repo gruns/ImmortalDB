@@ -14,7 +14,7 @@
     "build": "webpack --mode production",
     "lint": "eslint src/",
     "format": "prettier --write \"src/*.+(js)\" && eslint --fix src/",
-    "serve": "webpack-dev-server --watch --mode development --open"
+    "start": "webpack-dev-server --watch --mode development --open"
   },
   "dependencies": {
     "idb-keyval": "^3.0.5",
