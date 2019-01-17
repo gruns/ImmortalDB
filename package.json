@@ -12,7 +12,6 @@
   },
   "scripts": {
     "build": "webpack --mode production",
-    "dev": "webpack -w --mode development",
     "lint": "eslint src/",
     "format": "prettier --write \"src/*.+(js)\" && eslint --fix src/",
     "serve": "webpack-dev-server --watch --mode development --open"
