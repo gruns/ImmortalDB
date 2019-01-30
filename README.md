@@ -83,7 +83,7 @@ await ImmortalDB.set('key', 'value')
 embedded, like
 
 ```javascript
-const countPlusOne = (await ImmortalDB.set('count', countNumberOfClowns())) + 1
+const countPlusOne = (await ImmortalDB.set('count', numberOfClowns)) + 1
 ```
 
 #### Get
