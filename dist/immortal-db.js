@@ -3452,10 +3452,6 @@ if (WINDOW_IS_DEFINED && window.localStorage) {
   DEFAULT_STORES.push(LocalStorageStore);
 }
 
-if (WINDOW_IS_DEFINED && window.sessionStorage) {
-  DEFAULT_STORES.push(SessionStorageStore);
-}
-
 function arrayGet(arr, index) {
   var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
 
