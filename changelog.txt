@@ -1,0 +1,8 @@
+================================================================================
+ v1.0.3 (unreleased)
+================================================================================
+Fixed: Support Server Side Rendering where the <window> global variable isn't
+  available. Huge thank you to Krishna Sumanth and Kevin Miller.
+
+
+This changelog wasn't maintained prior to v1.0.2.
