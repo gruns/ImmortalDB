@@ -42,8 +42,12 @@ declare class StorageApiWrapper implements Store {
 export class LocalStorageStore extends StorageApiWrapper {}
 export class SessionStorageStore extends StorageApiWrapper {}
 
+interface StoreConstructor {
+    new (...args: any[]): Store;
+}
+
 export class ImmortalStorage {
-    constructor(stores?: Store[]);
+    constructor(stores?: StoreConstructor[]);
 
     get(key: string, _default?: null): Promise<string | null>;
     get(key: string, _default: string): Promise<string>;
