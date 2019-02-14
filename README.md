@@ -108,7 +108,7 @@ console.log(await ImmortalDB.get('hi'))  // Prints 'bonjour'.
 
 await ImmortalDB.remove('hi')
 
-console.log(await ImmortalDB.get('hi')) // Prints 'null'.
+console.log(await ImmortalDB.get('hi'))  // Prints 'null'.
 ```
 
 `key` must be a
