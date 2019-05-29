@@ -2,7 +2,7 @@
   "name": "immortal-db",
   "private": false,
   "version": "1.0.2",
-  "main": "src/index.js",
+  "main": "dist/immortal-db.js",
   "types": "immortal-db.d.ts",
   "unpkg": "dist/immortal-db.min.js",
   "homepage": "https://github.com/gruns/ImmortalDB",
