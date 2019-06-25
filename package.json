@@ -3,6 +3,7 @@
   "private": false,
   "version": "1.0.2",
   "main": "dist/immortal-db.js",
+  "module": "src/index.js",
   "types": "immortal-db.d.ts",
   "unpkg": "dist/immortal-db.min.js",
   "homepage": "https://github.com/gruns/ImmortalDB",
