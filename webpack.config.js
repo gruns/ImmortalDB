@@ -19,7 +19,6 @@
 //
 
 const path = require('path')
-const webpack = require('webpack')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 
@@ -37,6 +36,7 @@ module.exports = (env, argv) => ({
         library: 'ImmortalDB',
         filename: '[name].js',
         path: abspath('./dist/'),
+        libraryTarget: 'umd',
     },
     plugins: [
         new HtmlWebpackPlugin({
@@ -66,5 +66,5 @@ module.exports = (env, argv) => ({
                 }
             }
         ]
-    }    
+    }
 })
