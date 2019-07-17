@@ -12,14 +12,12 @@
 ImmortalDB is the best way to store persistent key-value data in the
 browser. Data saved to ImmortalDB is redundantly stored in
 [Cookies](https://developer.mozilla.org/en-US/docs/Web/HTTP/Cookies),
-[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API),
+[IndexedDB](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API), and
 [LocalStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/localStorage),
-and
-[SessionStorage](https://developer.mozilla.org/en-US/docs/Web/API/Window/sessionStorage),
 and relentlessly self heals if any data therein is deleted or corrupted.
 
 For example, clearing cookies is a common user action, even for non-technical
-users. And browsers will unceremoniously
+users. And browsers unceremoniously
 [delete](https://developer.mozilla.org/en-US/docs/Web/API/IndexedDB_API/Browser_storage_limits_and_eviction_criteria#LRU_policy)
 IndexedDB, LocalStorage, and/or SessionStorage without warning under storage
 pressure.
