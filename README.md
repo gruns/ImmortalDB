@@ -126,11 +126,14 @@ const db = ImmortalStorage(stores)
 await db.set('key', JSON.Stringify({1:1}))
 ```
 
-Available stores are
+Stores used by `ImmortalDB` are:
 
   - `CookieStore` -> Keys and values are stored in `document.cookie`.
   - `IndexedDbStore` -> Keys and values are stored in `window.indexedDB`.
   - `LocalStorageStore` -> Keys and values are stored in `window.localStorage`.
+
+Other, optional stores are:
+
   - `SessionStorageStore` -> Keys and values are stored in `window.sessionStorage`.
 
 New storage implementations can easily be added, too; they need only implement
