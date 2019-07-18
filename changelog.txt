@@ -1,6 +1,8 @@
 ================================================================================
  v1.0.3 (unreleased)
 ================================================================================
+Changed: SessionStorageStore is no longer used as a default data store with
+  ImmortalDB.
 Fixed: Support Server Side Rendering where the <window> global variable isn't
   available. Huge thank you to Krishna Sumanth and Kevin Miller.
 
