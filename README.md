@@ -123,7 +123,7 @@ import { ImmortalStorage, CookieStore, LocalStorageStore } from 'immortal-db'
 const stores = [CookieStore, LocalStorageStore]
 const db = new ImmortalStorage(stores)
 
-await db.set('key', JSON.Stringify({1:1}))
+await db.set(key, JSON.stringify({1:1}))
 ```
 
 Stores used by `ImmortalDB` are:
