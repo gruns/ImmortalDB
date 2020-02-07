@@ -46,9 +46,9 @@ In this way, ImmortalDB is like
 
 ### How ImmortalDB works.
 
-When you store a key-value pair in ImmortalDB, that key and value are saved
-redundantly in the browser's cookies, IndexedDB, LocalStorage, and
-SessionStorage data stores.
+When you store a key-value pair in ImmortalDB, that key and value are
+saved redundantly in the browser's cookies, IndexedDB, and LocalStorage
+data stores.
 
 When a value is retrieved via its key, ImmortalDB
 
