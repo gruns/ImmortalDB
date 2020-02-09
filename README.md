@@ -165,3 +165,24 @@ Or include `dist/immortal-db[.min].js` and use `window.ImmortalDB` directly.
   ...
 </html>
 ```
+
+
+### Development
+
+To test ImmortalDB, run
+
+```
+npm run start
+```
+
+This starts the webpac dev server and opens ImmortalDB's testing
+website, [http://localhost:8080/](http://localhost:8080/).
+
+Once tested, run
+
+```
+npm run build
+```
+
+to build production versions `immortal-db.js` and `immortal-db.min.js`
+in `dist/`.
