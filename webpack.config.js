@@ -66,5 +66,8 @@ module.exports = (env, argv) => ({
                 }
             }
         ]
-    }
+    },
+    devServer: {
+        port: 9234,
+    },
 })
