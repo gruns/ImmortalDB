@@ -5,6 +5,9 @@ Changed: SessionStorageStore is no longer used as a default data store with
   ImmortalDB.
 Fixed: Support Server Side Rendering where the <window> global variable isn't
   available. Huge thank you to Krishna Sumanth and Kevin Miller.
+Changed: For distribution, the main exported module in package.json is
+  now the production-ready dist/immortal-db.js. Huge thank you to
+  Donovan Edye.
 
 
 This changelog wasn't maintained prior to v1.0.2.
