@@ -1,5 +1,5 @@
 ================================================================================
- v1.0.3 (unreleased)
+ v1.0.3
 ================================================================================
 Changed: SessionStorageStore is no longer used as a default data store with
   ImmortalDB.
