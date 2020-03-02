@@ -34,15 +34,16 @@ function arrayGet (arr, index, _default = null) {
 }
 
 function countUniques (iterable) {
-  // A Map must be used instead of an Object because JavaScript is a buttshit
-  // language and all Object keys are serialized to strings. Thus undefined
-  // becomes 'undefined', null becomes 'null', etc and in turn null can't be
-  // differentiated from 'null', 'undefined' from undefined, etc. E.g.
-  // countUniques([null, 'null']) would incorrectly return {'null': 2} instead
-  // of the correct {null: 1, 'null': 1}.
+  // A Map must be used instead of an Object because JavaScript is a
+  // buttshit language and all Object keys are serialized to strings.
+  // Thus undefined becomes 'undefined', null becomes 'null', etc. Then,
+  // in turn, 'undefined' can't be differentiated from undefined, null
+  // from 'null', etc, and countUniques([null, 'null']) would
+  // incorrectly return {'null': 2} instead of {null: 1, 'null': 1}.
   //
-  // Unfortunately this Object behavior precludes the use of lodash.countBy()
-  // and similar methods which count with Objects instead of Maps.
+  // Unfortunately this Object behavior precludes the use of
+  // lodash.countBy() and similar methods which count with Objects
+  // instead of Maps.
   const m = new Map()
   let eles = iterable.slice()
 
