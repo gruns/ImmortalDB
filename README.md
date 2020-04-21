@@ -175,7 +175,7 @@ To test ImmortalDB, run
 npm run start
 ```
 
-This starts the [webpack](https://webpack.js.org/) dev server and opens
+This starts a [webpack](https://webpack.js.org/) dev server and opens
 ImmortalDB's testing website,
 [http://localhost:9234/](http://localhost:9234/).
 
