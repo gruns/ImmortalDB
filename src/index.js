@@ -105,15 +105,8 @@ class ImmortalStorage {
     let value
     const [firstValue, firstCount] = arrayGet(counted, 0, [undefined, 0])
     const [secondValue, secondCount] = arrayGet(counted, 1, [undefined, 0])
-    if (
-      firstCount > secondCount ||
-      (firstCount === secondCount && firstValue !== undefined)
-    ) {
-      value = firstValue
-    } else {
-      value = secondValue
-    }
 
+    value = (firstValue !== undefined && (secondValue === undefined || firstCount >= secondCount)) ? firstValue : secondValue;
     if (value !== undefined) {
       await this.set(key, value)
       return value
