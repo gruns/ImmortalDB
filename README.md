@@ -185,5 +185,5 @@ Once tested, run
 npm run build
 ```
 
-to build production versions `immortal-db.js` and `immortal-db.min.js`
+to produce production versions `immortal-db.js` and `immortal-db.min.js`
 in `dist/`.
