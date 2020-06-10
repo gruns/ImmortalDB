@@ -34,9 +34,9 @@ module.exports = (env, argv) => ({
     },
     output: {
         library: 'ImmortalDB',
+        libraryTarget: 'umd',
         filename: '[name].js',
         path: abspath('./dist/'),
-        libraryTarget: 'umd',
     },
     plugins: [
         new HtmlWebpackPlugin({
