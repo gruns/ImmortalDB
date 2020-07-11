@@ -22,7 +22,7 @@
     "js-cookie": "^2.2.1"
   },
   "devDependencies": {
-    "@babel/core": "^7.6.0",
+    "@babel/core": "^7.10.5",
     "@babel/polyfill": "^7.6.0",
     "@babel/preset-env": "^7.6.0",
     "babel-loader": "^8.0.6",
