@@ -19,11 +19,19 @@ const WINDOW_IS_DEFINED = typeof window !== 'undefined'
 // Stores must implement asynchronous constructor, get(), set(), and remove()
 // methods.
 const DEFAULT_STORES = [CookieStore]
-if (WINDOW_IS_DEFINED && window.indexedDB) {
-  DEFAULT_STORES.push(IndexedDbStore)
+try {
+  if (WINDOW_IS_DEFINED && window.indexedDB) {
+    DEFAULT_STORES.push(IndexedDbStore)
+  }
+} catch (err) {
+  // Ignore.
 }
-if (WINDOW_IS_DEFINED && window.localStorage) {
-  DEFAULT_STORES.push(LocalStorageStore)
+try {
+  if (WINDOW_IS_DEFINED && window.localStorage) {
+    DEFAULT_STORES.push(LocalStorageStore)
+  }
+} catch (err) {
+  // Ignore.
 }
 
 function arrayGet (arr, index, _default = null) {

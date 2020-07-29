@@ -5703,12 +5703,18 @@ var WINDOW_IS_DEFINED = typeof window !== 'undefined'; // Stores must implement 
 
 var DEFAULT_STORES = [cookie_store_CookieStore];
 
-if (WINDOW_IS_DEFINED && window.indexedDB) {
-  DEFAULT_STORES.push(indexed_db_IndexedDbStore);
+try {
+  if (WINDOW_IS_DEFINED && window.indexedDB) {
+    DEFAULT_STORES.push(indexed_db_IndexedDbStore);
+  }
+} catch (err) {// Ignore.
 }
 
-if (WINDOW_IS_DEFINED && window.localStorage) {
-  DEFAULT_STORES.push(LocalStorageStore);
+try {
+  if (WINDOW_IS_DEFINED && window.localStorage) {
+    DEFAULT_STORES.push(LocalStorageStore);
+  }
+} catch (err) {// Ignore.
 }
 
 function arrayGet(arr, index) {
