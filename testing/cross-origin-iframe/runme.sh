@@ -2,7 +2,7 @@
 
 # To test cross origin storage, execute this file and navigate to
 #
-#   http://127.0.0.1:9090/testing/safari-cross-origin-iframe/parent.html
+#   http://127.0.0.1:9090/testing/cross-origin-iframe/parent.html
 #
 # in your browser.
 
