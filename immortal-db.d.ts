@@ -16,11 +16,20 @@ export interface Store {
     remove(key: string): Promise<void>;
 }
 
+interface CookieAttributes {
+    expires?: number | Date;
+    path?: string;
+    domain?: string;
+    secure?: boolean;
+    sameSite?: 'strict' | 'Strict' | 'lax' | 'Lax' | 'none' | 'None';
+}
+
 export const DEFAULT_STORES: Store[];
 export const DEFAULT_KEY_PREFIX: string;
 export class CookieStore implements Store {
     constructor(ttl?: number);
 
+    static setStoreOptions(options?: CookieAttributes);
     get(key: string): Promise<string | undefined>;
     set(key: string, value: string): Promise<void>;
     remove(key: string): Promise<void>;

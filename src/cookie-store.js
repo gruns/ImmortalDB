@@ -14,9 +14,16 @@ const DEFAULT_COOKIE_TTL = 365 // Days.
 
 class CookieStore {
   constructor (ttl = DEFAULT_COOKIE_TTL) {
-    this.ttl = ttl
-
+    this.options = {
+      expires: ttl, ...(typeof CookieStore.storeOptions !== 'object'
+        ? {}
+        : CookieStore.storeOptions),
+    }
     return (async () => this)()
+  }
+
+  static setStoreOptions (options) {
+    CookieStore.storeOptions = options
   }
 
   async get (key) {
@@ -25,11 +32,11 @@ class CookieStore {
   }
 
   async set (key, value) {
-    Cookies.set(key, value, { expires: this.ttl })
+    Cookies.set(key, value, this.options)
   }
 
   async remove (key) {
-    Cookies.remove(key, { expires: this.ttl })
+    Cookies.remove(key, this.options)
   }
 }
 

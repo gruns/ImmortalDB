@@ -132,6 +132,21 @@ Stores used by `ImmortalDB` are:
   - `IndexedDbStore` -> Keys and values are stored in `window.indexedDB`.
   - `LocalStorageStore` -> Keys and values are stored in `window.localStorage`.
 
+For `CookieStore` you can configure cookies options passing your options by using static method `setStoreOptions`. For example: 
+
+```javascript
+import { ImmortalStorage, CookieStore, LocalStorageStore } from 'immortal-db'
+
+CookieStore.setStoreOptions({
+  sameSite: 'None',
+  secure: true
+})
+const stores = [CookieStore, LocalStorageStore]
+const db = new ImmortalStorage(stores)
+
+await db.set(key, JSON.stringify({1:1}))
+```
+
 Other, optional stores are:
 
   - `SessionStorageStore` -> Keys and values are stored in `window.sessionStorage`.
