@@ -4,6 +4,10 @@
       body {
         margin: 40px;
       }
+      select {
+        padding: 6px;
+        font-size: 14px;
+      }
       input {
         padding: 6px;
         width: 300px;
@@ -24,14 +28,24 @@
   </head>
   <body>
     <br>
-    <span>Key</span><input id="key" type="text" value="keysup"><br>
+    Database:
+    <select id="database-selection">
+        <option value="ImmortalStorage">ImmortalStorage</option>
+        <option value="CookieStorage">CookieStorage</option>
+    </select>
+    <br>
     <hr>
+
+    <span>Key</span><input id="key" type="text" value="keysup"><br>
+    <br>
     <span>Value</span> <input id="value" type="text">
     <button id="set" type="submit">Set</button>
     <button id="get" type="submit">Get</button>
     <button id="remove" type="submit">Remove</button>
     <hr>
 
+    Datastores:<br>
+    <br>
     <span>Cookies</span> <input id="cookies" type="text" disabled>
     <button id="removeCookie" type="submit">Remove</button><br>
 

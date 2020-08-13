@@ -14,25 +14,22 @@ import { LocalStorageStore, SessionStorageStore } from './web-storage'
 
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_immortal|'
-const WINDOW_IS_DEFINED = typeof window !== 'undefined'
+const WINDOW_IS_DEFINED = (typeof window !== 'undefined')
 
-// Stores must implement asynchronous constructor, get(), set(), and remove()
-// methods.
+// Stores must implement asynchronous constructor, get(), set(), and
+// remove() methods.
 const DEFAULT_STORES = [CookieStore]
 try {
   if (WINDOW_IS_DEFINED && window.indexedDB) {
     DEFAULT_STORES.push(IndexedDbStore)
   }
-} catch (err) {
-  // Ignore.
-}
+} catch (err) {}
+
 try {
   if (WINDOW_IS_DEFINED && window.localStorage) {
     DEFAULT_STORES.push(LocalStorageStore)
   }
-} catch (err) {
-  // Ignore.
-}
+} catch (err) {}
 
 function arrayGet (arr, index, _default = null) {
   if (index in arr) {
@@ -76,16 +73,37 @@ class ImmortalStorage {
   constructor (stores = DEFAULT_STORES) {
     this.stores = []
 
-    // Initialize stores asynchronously.
+    // Initialize stores asynchronously. Accept both instantiated store
+    // objects and uninstantiated store classes. If the latter,
+    // implicitly instantiate instances thereof in this constructor.
+    //
+    // This constructor must accept both instantiated store objects and
+    // uninstantiated store classes because it's impossible to export
+    // ImmortalStore if it only took store objects initialized
+    // asynchronously. Like:
+    //
+    //   ;(async () => {
+    //       const cookieStore = await CookieStore()
+    //       const ImmortalDB = new ImmortalStorage([cookieStore])
+    //       export { ImmortalDB }  // <----- Doesn't work.
+    //   })
+    //
+    // So to export a synchronous ImmortalStorage class, datastore
+    // classes (whose definitions are synchronous) must be accepted in
+    // addition to instantiated store objects.
     this.onReady = (async () => {
       this.stores = (await Promise.all(
-        stores.map(async Store => {
-          try {
-            return await new Store()
-          } catch (err) {
-            // TODO(grun): Log (where?) that the <Store> constructor Promise
-            // failed.
-            return null
+        stores.map(async StoreClassOrInstance => {
+          if (typeof StoreClassOrInstance === 'object') { // Store instance.
+            return StoreClassOrInstance
+          } else { // Store class.
+            try {
+              return await new StoreClassOrInstance() // Instantiate instance.
+            } catch (err) {
+              // TODO(grun): Log (where?) that the <Store> constructor Promise
+              // failed.
+              return null
+            }
           }
         }),
       )).filter(Boolean)

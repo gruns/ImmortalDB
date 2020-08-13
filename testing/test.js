@@ -9,20 +9,34 @@
 //
 
 const cl = console.log
-const db = ImmortalDB.ImmortalDB
+const CookieStore = ImmortalDB.CookieStore
+const ImmortalStorage = ImmortalDB.ImmortalStorage
 const idb = new idbKeyval.Store('ImmortalDB', 'key-value-pairs')
 
 const POLL_TIMEOUT = 300 // Milliseconds.
 const PREFIX = ImmortalDB.DEFAULT_KEY_PREFIX
 
+let db = ImmortalDB.ImmortalDB
 
 function sleep (ms) {
   return new Promise(resolve => setTimeout(resolve, ms))
 }
 
+function $ele (id) {
+    return document.getElementById(id)
+}
 
 ;(async () => {
-  const $ele = (id) => document.getElementById(id)
+  const cookieStore = await new CookieStore()
+  const cookieDb = await new ImmortalStorage([cookieStore])
+
+  $ele('database-selection').addEventListener('change', evt => {
+    if (evt.target.value === 'CookieStorage') {
+      db = cookieDb
+    } else {
+      db = ImmortalDB
+    }
+  })
 
   const $key = $ele('key')
   const $value = $ele('value')
