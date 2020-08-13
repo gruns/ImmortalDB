@@ -15,7 +15,8 @@ const DEFAULT_COOKIE_TTL = 365 // Days.
 class CookieStore {
   constructor (ttl = DEFAULT_COOKIE_TTL) {
     this.options = {
-      expires: ttl, ...(typeof CookieStore.storeOptions !== 'object'
+      expires: ttl,
+      ...(typeof CookieStore.storeOptions !== 'object'
         ? {}
         : CookieStore.storeOptions),
     }
