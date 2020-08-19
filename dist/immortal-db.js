@@ -5109,16 +5109,41 @@ function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _d
 //
 
 var DEFAULT_COOKIE_TTL = 365; // Days.
+// If this script is executing in a cross-origin iframe, the cookie must
+// be set with SameSite=None and Secure=true. See
+// https://web.dev/samesite-cookies-explained/ and
+// https://tools.ietf.org/html/draft-west-cookie-incrementalism-00 for
+// details on SameSite and cross-origin behavior.
+
+var CROSS_ORIGIN_IFRAME = amICrossOriginIframe();
+var DEFAULT_SECURE = CROSS_ORIGIN_IFRAME ? true : false;
+var DEFAULT_SAMESITE = CROSS_ORIGIN_IFRAME ? 'None' : 'Lax';
+
+function amICrossOriginIframe() {
+  try {
+    return !Boolean(window.top.location.href);
+  } catch (err) {
+    return true;
+  }
+}
 
 var cookie_store_CookieStore = /*#__PURE__*/function () {
   function CookieStore() {
     var _this = this;
 
-    var ttl = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : DEFAULT_COOKIE_TTL;
+    var _ref = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {},
+        _ref$ttl = _ref.ttl,
+        ttl = _ref$ttl === void 0 ? DEFAULT_COOKIE_TTL : _ref$ttl,
+        _ref$secure = _ref.secure,
+        secure = _ref$secure === void 0 ? DEFAULT_SECURE : _ref$secure,
+        _ref$sameSite = _ref.sameSite,
+        sameSite = _ref$sameSite === void 0 ? DEFAULT_SAMESITE : _ref$sameSite;
 
     _classCallCheck(this, CookieStore);
 
     this.ttl = ttl;
+    this.secure = secure;
+    this.sameSite = sameSite;
     return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
@@ -5169,9 +5194,7 @@ var cookie_store_CookieStore = /*#__PURE__*/function () {
           while (1) {
             switch (_context3.prev = _context3.next) {
               case 0:
-                js_cookie_default.a.set(key, value, {
-                  expires: this.ttl
-                });
+                js_cookie_default.a.set(key, value, this._constructCookieParams());
 
               case 1:
               case "end":
@@ -5195,9 +5218,7 @@ var cookie_store_CookieStore = /*#__PURE__*/function () {
           while (1) {
             switch (_context4.prev = _context4.next) {
               case 0:
-                js_cookie_default.a.remove(key, {
-                  expires: this.ttl
-                });
+                js_cookie_default.a.remove(key, this._constructCookieParams());
 
               case 1:
               case "end":
@@ -5213,6 +5234,15 @@ var cookie_store_CookieStore = /*#__PURE__*/function () {
 
       return remove;
     }()
+  }, {
+    key: "_constructCookieParams",
+    value: function _constructCookieParams() {
+      return {
+        expires: this.ttl,
+        secure: this.secure,
+        sameSite: this.sameSite
+      };
+    }
   }]);
 
   return CookieStore;
@@ -5674,6 +5704,8 @@ function _iterableToArrayLimit(arr, i) { if (typeof Symbol === "undefined" || !(
 
 function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
+function src_typeof(obj) { "@babel/helpers - typeof"; if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { src_typeof = function _typeof(obj) { return typeof obj; }; } else { src_typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return src_typeof(obj); }
+
 function src_asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function src_asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { src_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { src_asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -5698,8 +5730,8 @@ function src_createClass(Constructor, protoProps, staticProps) { if (protoProps)
 
 var cl = console.log;
 var DEFAULT_KEY_PREFIX = '_immortal|';
-var WINDOW_IS_DEFINED = typeof window !== 'undefined'; // Stores must implement asynchronous constructor, get(), set(), and remove()
-// methods.
+var WINDOW_IS_DEFINED = typeof window !== 'undefined'; // Stores must implement asynchronous constructor, get(), set(), and
+// remove() methods.
 
 var DEFAULT_STORES = [cookie_store_CookieStore];
 
@@ -5707,15 +5739,13 @@ try {
   if (WINDOW_IS_DEFINED && window.indexedDB) {
     DEFAULT_STORES.push(indexed_db_IndexedDbStore);
   }
-} catch (err) {// Ignore.
-}
+} catch (err) {}
 
 try {
   if (WINDOW_IS_DEFINED && window.localStorage) {
     DEFAULT_STORES.push(LocalStorageStore);
   }
-} catch (err) {// Ignore.
-}
+} catch (err) {}
 
 function arrayGet(arr, index) {
   var _default = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
@@ -5812,7 +5842,24 @@ var ImmortalStorage = /*#__PURE__*/function () {
 
     src_classCallCheck(this, ImmortalStorage);
 
-    this.stores = []; // Initialize stores asynchronously.
+    this.stores = []; // Initialize stores asynchronously. Accept both instantiated store
+    // objects and uninstantiated store classes. If the latter,
+    // implicitly instantiate instances thereof in this constructor.
+    //
+    // This constructor must accept both instantiated store objects and
+    // uninstantiated store classes because it's impossible to export
+    // ImmortalStore if it only took store objects initialized
+    // asynchronously. Like:
+    //
+    //   ;(async () => {
+    //       const cookieStore = await CookieStore()
+    //       const ImmortalDB = new ImmortalStorage([cookieStore])
+    //       export { ImmortalDB }  // <----- Doesn't work.
+    //   })
+    //
+    // So to export a synchronous ImmortalStorage class, datastore
+    // classes (whose definitions are synchronous) must be accepted in
+    // addition to instantiated store objects.
 
     this.onReady = src_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
       return regeneratorRuntime.wrap(function _callee2$(_context2) {
@@ -5821,29 +5868,37 @@ var ImmortalStorage = /*#__PURE__*/function () {
             case 0:
               _context2.next = 2;
               return Promise.all(stores.map( /*#__PURE__*/function () {
-                var _ref2 = src_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(Store) {
+                var _ref2 = src_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(StoreClassOrInstance) {
                   return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                       switch (_context.prev = _context.next) {
                         case 0:
-                          _context.prev = 0;
-                          _context.next = 3;
-                          return new Store();
+                          if (!(src_typeof(StoreClassOrInstance) === 'object')) {
+                            _context.next = 4;
+                            break;
+                          }
 
-                        case 3:
+                          return _context.abrupt("return", StoreClassOrInstance);
+
+                        case 4:
+                          _context.prev = 4;
+                          _context.next = 7;
+                          return new StoreClassOrInstance();
+
+                        case 7:
                           return _context.abrupt("return", _context.sent);
 
-                        case 6:
-                          _context.prev = 6;
-                          _context.t0 = _context["catch"](0);
+                        case 10:
+                          _context.prev = 10;
+                          _context.t0 = _context["catch"](4);
                           return _context.abrupt("return", null);
 
-                        case 9:
+                        case 13:
                         case "end":
                           return _context.stop();
                       }
                     }
-                  }, _callee, null, [[0, 6]]);
+                  }, _callee, null, [[4, 10]]);
                 }));
 
                 return function (_x) {
