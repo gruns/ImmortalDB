@@ -20,27 +20,25 @@ const CROSS_ORIGIN_IFRAME = amIInsideACrossOriginIframe()
 const DEFAULT_SECURE = (CROSS_ORIGIN_IFRAME ? true : false)
 const DEFAULT_SAMESITE = (CROSS_ORIGIN_IFRAME ? 'None' : 'Lax')
 
-
 function amIInsideACrossOriginIframe () {
-    try {
-        // Raises ReferenceError if window isn't defined, eg if executed
-        // outside a browser.
-        //
-        // If inside a cross-origin iframe, raises: Uncaught
-        // DOMException: Blocked a frame with origin "..." from
-        // accessing a cross-origin frame.
-        return !Boolean(window.top.location.href)
-    } catch (err) {
-        return true
-    }
+  try {
+    // Raises ReferenceError if window isn't defined, eg if executed
+    // outside a browser.
+    //
+    // If inside a cross-origin iframe, raises: Uncaught
+    // DOMException: Blocked a frame with origin "..." from
+    // accessing a cross-origin frame.
+    return !Boolean(window.top.location.href)
+  } catch (err) {
+    return true
+  }
 }
 
-
 class CookieStore {
-    constructor ({
-        ttl = DEFAULT_COOKIE_TTL,
-        secure = DEFAULT_SECURE,
-        sameSite = DEFAULT_SAMESITE} = {}) {
+  constructor ({
+      ttl = DEFAULT_COOKIE_TTL,
+      secure = DEFAULT_SECURE,
+      sameSite = DEFAULT_SAMESITE} = {}) {
     this.ttl = ttl
     this.secure = secure
     this.sameSite = sameSite
