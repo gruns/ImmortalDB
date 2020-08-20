@@ -19,7 +19,7 @@ export interface Store {
 export const DEFAULT_STORES: Store[];
 export const DEFAULT_KEY_PREFIX: string;
 export class CookieStore implements Store {
-    constructor(ttl?: number);
+    constructor(ttl?: number, secure?: boolean, sameSite?: string);
 
     get(key: string): Promise<string | undefined>;
     set(key: string, value: string): Promise<void>;
