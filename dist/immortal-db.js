@@ -5115,12 +5115,18 @@ var DEFAULT_COOKIE_TTL = 365; // Days.
 // https://tools.ietf.org/html/draft-west-cookie-incrementalism-00 for
 // details on SameSite and cross-origin behavior.
 
-var CROSS_ORIGIN_IFRAME = amICrossOriginIframe();
+var CROSS_ORIGIN_IFRAME = amIInsideACrossOriginIframe();
 var DEFAULT_SECURE = CROSS_ORIGIN_IFRAME ? true : false;
 var DEFAULT_SAMESITE = CROSS_ORIGIN_IFRAME ? 'None' : 'Lax';
 
-function amICrossOriginIframe() {
+function amIInsideACrossOriginIframe() {
   try {
+    // Raises ReferenceError if window isn't defined, eg if executed
+    // outside a browser.
+    //
+    // If inside a cross-origin iframe, raises: Uncaught
+    // DOMException: Blocked a frame with origin "..." from
+    // accessing a cross-origin frame.
     return !Boolean(window.top.location.href);
   } catch (err) {
     return true;

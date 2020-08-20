@@ -1,7 +1,7 @@
 {
   "name": "immortal-db",
   "private": false,
-  "version": "1.0.3",
+  "version": "1.1.0",
   "main": "dist/immortal-db.js",
   "module": "src/index.js",
   "types": "immortal-db.d.ts",

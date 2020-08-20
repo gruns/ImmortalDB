@@ -1,4 +1,14 @@
 ================================================================================
+ v1.1.0
+================================================================================
+Fixed: Cross-origin cookies are now stored with SameSite=None,
+  Secure=true, as required. Other cookies remain set with SameSite=Lax
+  and Secure=false -- the same defaults as if SameSite and Secure
+  remained unset. Huge thank you to @zproxyz.
+Fixed: Only add IndexedDbStore and LocalStorageStore if accessible.
+Added: Cross-origin and same-origin tests.
+
+================================================================================
  v1.0.3
 ================================================================================
 Changed: SessionStorageStore is no longer used as a default data store with
@@ -10,4 +20,4 @@ Changed: For distribution, the main exported module in package.json is
   Donovan Edye.
 
 
-This changelog wasn't maintained prior to v1.0.2.
+This changelog wasn't maintained prior to v1.0.3.
