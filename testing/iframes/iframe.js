@@ -11,6 +11,7 @@ const ImmortalStorage = ImmortalDB.ImmortalStorage
   // Test all stores.
   const db = ImmortalDB.ImmortalDB
 
+  await db.remove('hi')
   await db.set('hi', 'lolsup')
 
   cl('val', await db.get('hi'))
