@@ -18,6 +18,8 @@ python3 -m http.server 9091 &
 #http-server -p 9091 -S &
 
 python3 -m webbrowser \
-    -t "http://127.0.0.1:9090/testing/iframes/parent.html" &
+    -t "http://127.0.0.1:9090/testing/iframes/same-origin.html" &
+python3 -m webbrowser \
+    -t "http://127.0.0.1:9090/testing/iframes/cross-origin.html" &
 
 wait $pid
