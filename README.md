@@ -115,7 +115,7 @@ console.log(await ImmortalDB.get('hi'))  // Prints 'null'.
 #### Data Stores
 
 The data stores that ImmortalDB stores data in can also be configured. For
-example, to only store data reliably in cookies and LocalStorage:
+example, this is how to only store data reliably in cookies and LocalStorage:
 
 ```javascript
 import { ImmortalStorage, CookieStore, LocalStorageStore } from 'immortal-db'
