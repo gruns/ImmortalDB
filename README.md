@@ -114,8 +114,9 @@ console.log(await ImmortalDB.get('hi'))  // Prints 'null'.
 
 #### Data Stores
 
-The data stores that ImmortalDB stores data in can also be configured. For
-example, this is how to only store data reliably in cookies and LocalStorage:
+The data stores that ImmortalDB stores data in can also be configured.
+For example, this is how to store data reliably in cookies and
+LocalStorage only:
 
 ```javascript
 import { ImmortalStorage, CookieStore, LocalStorageStore } from 'immortal-db'
@@ -126,7 +127,7 @@ const db = new ImmortalStorage(stores)
 await db.set(key, JSON.stringify({1:1}))
 ```
 
-Stores used by `ImmortalDB` are:
+By default, stores used by `ImmortalDB` are:
 
   - `CookieStore` -> Keys and values are stored in `document.cookie`.
   - `IndexedDbStore` -> Keys and values are stored in `window.indexedDB`.
@@ -136,8 +137,9 @@ Other, optional stores are:
 
   - `SessionStorageStore` -> Keys and values are stored in `window.sessionStorage`.
 
-New storage implementations can easily be added, too; they need only implement
-the methods `get(key, default)`, `set(key, value)`, and `remove(key)`.
+New storage implementations can easily be added, too; they need only
+implement the async methods `get(key, default)`, `set(key, value)`, and
+`remove(key)`.
 
 
 ### Installation
