@@ -37,7 +37,7 @@
     "eslint-plugin-standard": "^4.0.1",
     "html-webpack-plugin": "^4.4.1",
     "prettier": "^1.19.1",
-    "uglifyjs-webpack-plugin": "^2.2.0",
+    "terser-webpack-plugin": "^4.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
     "webpack-dev-server": "^3.11.0"

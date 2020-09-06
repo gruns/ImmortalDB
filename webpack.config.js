@@ -20,7 +20,7 @@
 
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const TerserPlugin = require('terser-webpack-plugin')
 
 function abspath (p) {
     return path.resolve(__dirname, p)
@@ -45,8 +45,9 @@ module.exports = (env, argv) => ({
         }),
     ],
     optimization: {
+        minimize: true,
         minimizer: [
-            new UglifyJsPlugin({
+            new TerserPlugin({
                 test: /\.min\.js(\?.*)?$/i,
             }),
         ]
