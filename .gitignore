@@ -18,5 +18,6 @@ node_modules/
 ##################################################
 # ImmortalDB
 ##################################################
-# HtmlWebpackPlugin's generated testing/test.html.
+# HtmlWebpackPlugin's generated testing/test.html and *.LICENSE.txt.
 dist/index.html
+dist/*.LICENSE.txt
