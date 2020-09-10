@@ -12,6 +12,8 @@ const cl = console.log
 const CookieStore = ImmortalDB.CookieStore
 const ImmortalStorage = ImmortalDB.ImmortalStorage
 const idb = new idbKeyval.Store('ImmortalDB', 'key-value-pairs')
+const idbExpires = new idbKeyval.Store('ImmortalDB', 'key-value-expires')
+
 
 const POLL_TIMEOUT = 300 // Milliseconds.
 const PREFIX = ImmortalDB.DEFAULT_KEY_PREFIX
@@ -40,11 +42,15 @@ function $ele (id) {
 
   const $key = $ele('key')
   const $value = $ele('value')
+  const $expires = $ele('expires')
 
   $ele('get').addEventListener(
     'click', async () => $value.value = await db.get($key.value), false)
   $ele('set').addEventListener(
-    'click', async () => await db.set($key.value, $value.value), false)
+    'click', async () => {
+      const expires = +$expires.value
+      await db.set($key.value, $value.value, { expires })
+    }, false)
   $ele('remove').addEventListener('click', async () => {
     await db.remove($key.value)
     $value.value = ''
