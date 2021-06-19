@@ -181,11 +181,10 @@ This starts a [webpack](https://webpack.js.org/) dev server and opens
 ImmortalDB's testing website,
 [http://localhost:9234/](http://localhost:9234/).
 
-Once tested, run
+Once tested, to produce new production-ready files `immortal-db.js` and
+`immortal-db.min.js` in `dist/`, run
 
 ```
 npm run build
 ```
 
-to produce production versions `immortal-db.js` and `immortal-db.min.js`
-in `dist/`.
