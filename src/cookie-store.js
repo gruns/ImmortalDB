@@ -17,8 +17,8 @@ const DEFAULT_COOKIE_TTL = 365 // Days.
 // https://tools.ietf.org/html/draft-west-cookie-incrementalism-00 for
 // details on SameSite and cross-origin behavior.
 const CROSS_ORIGIN_IFRAME = amIInsideACrossOriginIframe()
-const DEFAULT_SECURE = (CROSS_ORIGIN_IFRAME ? true : false)
-const DEFAULT_SAMESITE = (CROSS_ORIGIN_IFRAME ? 'None' : 'Lax')
+const DEFAULT_SECURE = !!CROSS_ORIGIN_IFRAME
+const DEFAULT_SAMESITE = CROSS_ORIGIN_IFRAME ? 'None' : 'Lax'
 
 function amIInsideACrossOriginIframe () {
   try {
@@ -28,7 +28,7 @@ function amIInsideACrossOriginIframe () {
     // If inside a cross-origin iframe, raises: Uncaught
     // DOMException: Blocked a frame with origin "..." from
     // accessing a cross-origin frame.
-    return !Boolean(window.top.location.href)
+    return !window.top.location.href
   } catch (err) {
     return true
   }
@@ -36,9 +36,10 @@ function amIInsideACrossOriginIframe () {
 
 class CookieStore {
   constructor ({
-      ttl = DEFAULT_COOKIE_TTL,
-      secure = DEFAULT_SECURE,
-      sameSite = DEFAULT_SAMESITE} = {}) {
+    ttl = DEFAULT_COOKIE_TTL,
+    secure = DEFAULT_SECURE,
+    sameSite = DEFAULT_SAMESITE,
+  } = {}) {
     this.ttl = ttl
     this.secure = secure
     this.sameSite = sameSite
@@ -48,23 +49,45 @@ class CookieStore {
 
   async get (key) {
     const value = Cookies.get(key)
+    console.log(Cookies.expires)
     return typeof value === 'string' ? value : undefined
   }
 
-  async set (key, value) {
-    Cookies.set(key, value, this._constructCookieParams())
+  async set (key, value, options = { expires: 0, isExpiresDate: false }) {
+    let opts = {}
+    if (options && options.expires) {
+      opts.expires = options.isExpiresDate
+        ? new Date(options.expires)
+        : new Date(new Date().getTime() + options.expires * 60 * 1000)
+    }
+    Cookies.set(key, value, this._constructCookieParams(opts))
   }
 
   async remove (key) {
     Cookies.remove(key, this._constructCookieParams())
   }
 
-  _constructCookieParams () {
-    return {
-      expires: this.ttl,
+  _constructCookieParams (
+    options = {
+      expires: this.tll,
+      secure: this.secure,
+      sameSite: this.sameSite,
+    },
+  ) {
+    const opts = {
+      expires: this.tll,
       secure: this.secure,
       sameSite: this.sameSite,
     }
+
+    const keys = Object.keys(opts)
+    for (let i = 0; i < keys.length; i++) {
+      if (options[keys[i]]) {
+        opts[keys[i]] = options[keys[i]]
+      }
+    }
+
+    return opts
   }
 }
 

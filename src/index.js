@@ -14,7 +14,7 @@ import { LocalStorageStore, SessionStorageStore } from './web-storage'
 
 const cl = console.log
 const DEFAULT_KEY_PREFIX = '_immortal|'
-const WINDOW_IS_DEFINED = (typeof window !== 'undefined')
+const WINDOW_IS_DEFINED = typeof window !== 'undefined'
 
 // Stores must implement asynchronous constructor, get(), set(), and
 // remove() methods.
@@ -92,21 +92,25 @@ class ImmortalStorage {
     // classes (whose definitions are synchronous) must be accepted in
     // addition to instantiated store objects.
     this.onReady = (async () => {
-      this.stores = (await Promise.all(
-        stores.map(async StoreClassOrInstance => {
-          if (typeof StoreClassOrInstance === 'object') { // Store instance.
-            return StoreClassOrInstance
-          } else { // Store class.
-            try {
-              return await new StoreClassOrInstance() // Instantiate instance.
-            } catch (err) {
-              // TODO(grun): Log (where?) that the <Store> constructor Promise
-              // failed.
-              return null
+      this.stores = (
+        await Promise.all(
+          stores.map(async StoreClassOrInstance => {
+            if (typeof StoreClassOrInstance === 'object') {
+              // Store instance.
+              return StoreClassOrInstance
+            } else {
+              // Store class.
+              try {
+                return await new StoreClassOrInstance() // Instantiate instance.
+              } catch (err) {
+                // TODO(grun): Log (where?) that the <Store> constructor Promise
+                // failed.
+                return null
+              }
             }
-          }
-        }),
-      )).filter(Boolean)
+          }),
+        )
+      ).filter(Boolean)
     })()
   }
 
@@ -125,6 +129,28 @@ class ImmortalStorage {
       }),
     )
 
+    const expiresValues = await Promise.all(
+      this.stores.map(async store => {
+        try {
+          return await store.getExpires(prefixedKey)
+        } catch (err) {}
+      }),
+    )
+
+    const countedExpires = Array.from(countUniques(expiresValues).entries())
+    countedExpires.sort((a, b) => a[1] <= b[1])
+    let expires
+    const [firstVal, firstCo] = arrayGet(countedExpires, 0, [undefined, 0])
+    const [secondVal, secondCo] = arrayGet(countedExpires, 1, [undefined, 0])
+    if (
+      firstCo > secondCo ||
+      (firstCo === secondCo && firstVal !== undefined)
+    ) {
+      expires = firstVal
+    } else {
+      expires = secondVal
+    }
+
     const counted = Array.from(countUniques(values).entries())
     counted.sort((a, b) => a[1] <= b[1])
 
@@ -141,7 +167,7 @@ class ImmortalStorage {
     }
 
     if (value !== undefined) {
-      await this.set(key, value)
+      await this.set(key, value, { expires, isExpiresDate: true })
       return value
     } else {
       await this.remove(key)
@@ -149,7 +175,7 @@ class ImmortalStorage {
     }
   }
 
-  async set (key, value) {
+  async set (key, value, options = { expires: 0 }) {
     await this.onReady
 
     key = `${DEFAULT_KEY_PREFIX}${key}`
@@ -157,7 +183,7 @@ class ImmortalStorage {
     await Promise.all(
       this.stores.map(async store => {
         try {
-          await store.set(key, value)
+          await store.set(key, value, options)
         } catch (err) {
           cl(err)
         }
