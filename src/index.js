@@ -126,15 +126,12 @@ class ImmortalStorage {
     )
 
     const counted = Array.from(countUniques(values).entries())
-    counted.sort((a, b) => a[1] <= b[1])
+    counted.sort((a, b) => b[1] - a[1])
 
     let value
     const [firstValue, firstCount] = arrayGet(counted, 0, [undefined, 0])
     const [secondValue, secondCount] = arrayGet(counted, 1, [undefined, 0])
-    if (
-      firstCount > secondCount ||
-      (firstCount === secondCount && firstValue !== undefined)
-    ) {
+    if (firstCount >= secondCount && firstValue !== undefined) {
       value = firstValue
     } else {
       value = secondValue
