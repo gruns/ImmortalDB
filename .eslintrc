@@ -3,15 +3,16 @@
       "ecmaVersion": "2018",
       "sourceType": "module"
     },
-    "plugins":["prettier"],
-    "extends": [
-      "standard", "eslint-config-prettier"
-    ],
+    "extends": "airbnb-base",
     "rules": {
-        "space-before-function-paren": [2, "always"]
+        "indent": ["error", 4],
+        "no-empty": ["error", { "allowEmptyCatch": true }]
     },
     "env": {
         "browser": true,
-        "es6": true
+        "es6": true,
+        "jest": {
+            "globals": true
+        }
     }
 }

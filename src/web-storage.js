@@ -9,36 +9,36 @@
 //
 
 class StorageApiWrapper {
-  constructor (store) {
-    this.store = store
+    constructor(store) {
+        this.store = store;
 
-    return (async () => this)()
-  }
+        return (async () => this)();
+    }
 
-  async get (key) {
-    const value = this.store.getItem(key)
-    return typeof value === 'string' ? value : undefined
-  }
+    async get(key) {
+        const value = this.store.getItem(key);
+        return typeof value === 'string' ? value : undefined;
+    }
 
-  async set (key, value) {
-    this.store.setItem(key, value)
-  }
+    async set(key, value) {
+        this.store.setItem(key, value);
+    }
 
-  async remove (key) {
-    this.store.removeItem(key)
-  }
+    async remove(key) {
+        this.store.removeItem(key);
+    }
 }
 
 class LocalStorageStore extends StorageApiWrapper {
-  constructor () {
-    super(window.localStorage)
-  }
+    constructor() {
+        super(window.localStorage);
+    }
 }
 
 class SessionStorageStore extends StorageApiWrapper {
-  constructor () {
-    super(window.sessionStorage)
-  }
+    constructor() {
+        super(window.sessionStorage);
+    }
 }
 
-export { LocalStorageStore, SessionStorageStore }
+export { LocalStorageStore, SessionStorageStore };

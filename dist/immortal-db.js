@@ -5224,7 +5224,7 @@ var DEFAULT_COOKIE_TTL = 365; // Days.
 // details on SameSite and cross-origin behavior.
 
 var CROSS_ORIGIN_IFRAME = amIInsideACrossOriginIframe();
-var DEFAULT_SECURE = CROSS_ORIGIN_IFRAME ? true : false;
+var DEFAULT_SECURE = !!CROSS_ORIGIN_IFRAME;
 var DEFAULT_SAMESITE = CROSS_ORIGIN_IFRAME ? 'None' : 'Lax';
 
 function amIInsideACrossOriginIframe() {
@@ -5235,7 +5235,7 @@ function amIInsideACrossOriginIframe() {
     // If inside a cross-origin iframe, raises: Uncaught
     // DOMException: Blocked a frame with origin "..." from
     // accessing a cross-origin frame.
-    return !Boolean(window.top.location.href);
+    return !window.top.location.href;
   } catch (err) {
     return true;
   }
@@ -5479,7 +5479,7 @@ var indexed_db_IndexedDbStore = /*#__PURE__*/function () {
               return _this.store._dbp;
 
             case 3:
-              _context.next = 12;
+              _context.next = 10;
               break;
 
             case 5:
@@ -5487,19 +5487,19 @@ var indexed_db_IndexedDbStore = /*#__PURE__*/function () {
               _context.t0 = _context["catch"](0);
 
               if (!(_context.t0.name === 'SecurityError')) {
-                _context.next = 11;
+                _context.next = 9;
                 break;
               }
 
               return _context.abrupt("return", null);
 
-            case 11:
+            case 9:
               throw _context.t0;
 
-            case 12:
+            case 10:
               return _context.abrupt("return", _this);
 
-            case 13:
+            case 11:
             case "end":
               return _context.stop();
           }
@@ -5974,31 +5974,31 @@ var ImmortalStorage = /*#__PURE__*/function () {
                       switch (_context.prev = _context.next) {
                         case 0:
                           if (!(src_typeof(StoreClassOrInstance) === 'object')) {
-                            _context.next = 4;
+                            _context.next = 2;
                             break;
                           }
 
                           return _context.abrupt("return", StoreClassOrInstance);
 
-                        case 4:
-                          _context.prev = 4;
-                          _context.next = 7;
+                        case 2:
+                          _context.prev = 2;
+                          _context.next = 5;
                           return new StoreClassOrInstance();
 
-                        case 7:
+                        case 5:
                           return _context.abrupt("return", _context.sent);
 
-                        case 10:
-                          _context.prev = 10;
-                          _context.t0 = _context["catch"](4);
+                        case 8:
+                          _context.prev = 8;
+                          _context.t0 = _context["catch"](2);
                           return _context.abrupt("return", null);
 
-                        case 13:
+                        case 11:
                         case "end":
                           return _context.stop();
                       }
                     }
-                  }, _callee, null, [[4, 10]]);
+                  }, _callee, null, [[2, 8]]);
                 }));
 
                 return function (_x) {
@@ -6095,7 +6095,7 @@ var ImmortalStorage = /*#__PURE__*/function () {
                 }
 
                 if (!(value !== undefined)) {
-                  _context4.next = 18;
+                  _context4.next = 16;
                   break;
                 }
 
@@ -6105,14 +6105,14 @@ var ImmortalStorage = /*#__PURE__*/function () {
               case 15:
                 return _context4.abrupt("return", value);
 
-              case 18:
-                _context4.next = 20;
+              case 16:
+                _context4.next = 18;
                 return this.remove(key);
 
-              case 20:
+              case 18:
                 return _context4.abrupt("return", _default);
 
-              case 21:
+              case 19:
               case "end":
                 return _context4.stop();
             }

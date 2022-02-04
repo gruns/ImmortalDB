@@ -6,14 +6,14 @@
   "module": "src/index.js",
   "types": "immortal-db.d.ts",
   "unpkg": "dist/immortal-db.min.js",
-  "homepage": "https://github.com/gruns/ImmortalDB",
+  "homepage": "https://github.com/the-hotels-network/ImmortalDB",
   "repository": {
     "type": "git",
-    "url": "https://github.com/gruns/ImmortalDB.git"
+    "url": "https://github.com/the-hotels-network/ImmortalDB.git"
   },
   "scripts": {
     "build": "webpack --mode production",
-    "format": "prettier --write \"src/*.+(js)\" && eslint --fix src/",
+    "format": "eslint --fix src/",
     "lint": "eslint src/",
     "start": "webpack-dev-server --watch --mode development --open"
   },
@@ -27,16 +27,9 @@
     "@babel/preset-env": "^7.11.5",
     "babel-loader": "^8.1.0",
     "core-js": "^3.6.5",
-    "eslint": "^5.16.0",
-    "eslint-config-prettier": "^3.6.0",
-    "eslint-config-standard": "^12.0.0",
-    "eslint-plugin-import": "^2.22.0",
-    "eslint-plugin-node": "^8.0.1",
-    "eslint-plugin-prettier": "^3.1.4",
-    "eslint-plugin-promise": "^4.2.1",
-    "eslint-plugin-standard": "^4.0.1",
+    "eslint": "^8.8.0",
+    "eslint-config-airbnb-base": "^15.0.0",
     "html-webpack-plugin": "^4.4.1",
-    "prettier": "^1.19.1",
     "terser-webpack-plugin": "^4.1.0",
     "webpack": "^4.44.1",
     "webpack-cli": "^3.3.12",
