@@ -14,7 +14,12 @@ function arrayGet(arr, index, _default = null) {
 }
 
 export class ImmortalStorage {
-    constructor(stores = DEFAULT_STORES) {
+    constructor(
+        stores = DEFAULT_STORES,
+        keyPrefix = DEFAULT_KEY_PREFIX,
+    ) {
+        this.keyPrefix = keyPrefix;
+        this.prefix = (value) => `${this.keyPrefix}${value}`;
         this.stores = [];
 
         // Initialize stores asynchronously. Accept both instantiated store
@@ -56,7 +61,7 @@ export class ImmortalStorage {
     async get(key, _default = null) {
         await this.onReady;
 
-        const prefixedKey = `${DEFAULT_KEY_PREFIX}${key}`;
+        const prefixedKey = this.prefix(key);
 
         const values = await Promise.all(
             this.stores.map(async (store) => {
@@ -94,12 +99,12 @@ export class ImmortalStorage {
     async set(key, value) {
         await this.onReady;
 
-        key = `${DEFAULT_KEY_PREFIX}${key}`;
+        const prefixedKey = this.prefix(key);
 
         await Promise.all(
             this.stores.map(async (store) => {
                 try {
-                    await store.set(key, value);
+                    await store.set(prefixedKey, value);
                 } catch (err) {
                     cl(err);
                 }
@@ -112,12 +117,12 @@ export class ImmortalStorage {
     async remove(key) {
         await this.onReady;
 
-        key = `${DEFAULT_KEY_PREFIX}${key}`;
+        const prefixedKey = this.prefix(key);
 
         await Promise.all(
             this.stores.map(async (store) => {
                 try {
-                    await store.remove(key);
+                    await store.remove(prefixedKey);
                 } catch (err) {
                     cl(err);
                 }
