@@ -11,6 +11,7 @@
 import { CookieStore } from './cookie-store';
 import { IndexedDbStore } from './indexed-db';
 import { LocalStorageStore, SessionStorageStore } from './web-storage';
+import { countUniques } from './helpers';
 
 const cl = console.log;
 const DEFAULT_KEY_PREFIX = '_immortal|';
@@ -36,37 +37,6 @@ function arrayGet(arr, index, _default = null) {
         return arr[index];
     }
     return _default;
-}
-
-function countUniques(iterable) {
-    // A Map must be used instead of an Object because JavaScript is a
-    // buttshit language and all Object keys are serialized to strings.
-    // Thus undefined becomes 'undefined', null becomes 'null', etc. Then,
-    // in turn, 'undefined' can't be differentiated from undefined, null
-    // from 'null', etc, and countUniques([null, 'null']) would
-    // incorrectly return {'null': 2} instead of {null: 1, 'null': 1}.
-    //
-    // Unfortunately this Object behavior precludes the use of
-    // lodash.countBy() and similar methods which count with Objects
-    // instead of Maps.
-    const m = new Map();
-    let eles = iterable.slice();
-
-    for (const ele of eles) {
-        let count = 0;
-        for (const obj of eles) {
-            if (ele === obj) {
-                count += 1;
-            }
-        }
-
-        if (count > 0) {
-            m.set(ele, count);
-            eles = eles.filter((obj) => obj !== ele);
-        }
-    }
-
-    return m;
 }
 
 class ImmortalStorage {
@@ -124,7 +94,7 @@ class ImmortalStorage {
             }),
         );
 
-        const counted = Array.from(countUniques(values).entries());
+        const counted = countUniques(values);
         counted.sort((a, b) => a[1] <= b[1]);
 
         let value;
