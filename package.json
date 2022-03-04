@@ -15,7 +15,8 @@
     "build": "webpack --mode production",
     "format": "eslint --fix src/",
     "lint": "eslint src/",
-    "start": "webpack-dev-server --watch --mode development --open"
+    "start": "webpack-dev-server --watch --mode development --open",
+    "test": "jest src/"
   },
   "dependencies": {
     "idb-keyval": "^3.2.0",
