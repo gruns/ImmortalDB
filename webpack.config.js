@@ -41,7 +41,7 @@ module.exports = (env, argv) => ({
     plugins: [
         new HtmlWebpackPlugin({
             inject: 'head',
-            template: abspath('./testing/test.html'),
+            template: abspath('./playground/test.html'),
         }),
     ],
     optimization: {

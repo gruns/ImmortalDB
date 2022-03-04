@@ -18,8 +18,8 @@ pid=$!
 http-server -p 9091 -S -C self-signed-dev-cert.pem -K self-signed-dev-key.pem &
 
 python3 -m webbrowser \
-    -t "http://127.0.0.1:9090/testing/iframes/same-origin.html" &
+    -t "http://127.0.0.1:9090/playground/iframes/same-origin.html" &
 python3 -m webbrowser \
-    -t "http://127.0.0.1:9090/testing/iframes/cross-origin.html" &
+    -t "http://127.0.0.1:9090/playground/iframes/cross-origin.html" &
 
 wait $pid
