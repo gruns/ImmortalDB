@@ -1,5 +1,5 @@
 {
-  "name": "immortal-db",
+  "name": "@thehotelsnetwork/immortal-db",
   "private": false,
   "version": "2.0.0",
   "main": "dist/immortal-db.js",
